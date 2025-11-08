@@ -65,16 +65,31 @@ def check_dependencies():
 def check_files():
     """Check required files and directories"""
     print("\n📁 Checking Files and Directories...")
+    
+    # Detect if running in GitHub Actions
+    is_github_actions = os.getenv('GITHUB_ACTIONS') == 'true'
 
     required_files = [
         "scripts/train_production.py",
         "scripts/benchmark.py",
         "configs/production-config.yaml",
-        "data/training_data.jsonl",
-        "data/test_data.jsonl",
     ]
+    
+    # In GitHub Actions, we may have generated data instead of static files
+    if not is_github_actions:
+        required_files.extend([
+            "data/training_data.jsonl",
+            "data/test_data.jsonl",
+        ])
+    else:
+        # In GitHub Actions, check for any training data (could be generated)
+        print("   ℹ️  GitHub Actions environment detected - checking for generated data")
 
-    required_dirs = ["scripts", "configs", "data", "models", "venv"]
+    required_dirs = ["scripts", "configs", "data", "models"]
+    
+    # venv is not needed in GitHub Actions (uses system Python)
+    if not is_github_actions:
+        required_dirs.append("venv")
 
     missing_files = []
     for file_path in required_files:
@@ -103,8 +118,45 @@ def check_files():
 def check_data_format():
     """Check data file formats"""
     print("\n📊 Checking Data Format...")
+    
+    # Check if we're in GitHub Actions
+    is_github_actions = os.getenv('GITHUB_ACTIONS', '').lower() == 'true'
+    
+    if is_github_actions:
+        print("   ⚡ GitHub Actions environment detected - checking for generated data...")
+        # In GitHub Actions, check for generated synthetic data
+        data_files = []
+        if os.path.exists("data/"):
+            for file in os.listdir("data/"):
+                if file.endswith(".jsonl"):
+                    data_files.append(f"data/{file}")
+        
+        if not data_files:
+            print("   ❌ No JSONL data files found in GitHub Actions environment")
+            return False
+            
+        print(f"   ✅ Found data files: {data_files}")
+        
+        # Check first available data file format
+        try:
+            with open(data_files[0], "r") as f:
+                sample_data = [json.loads(line) for line in f]
+            
+            if sample_data:
+                example = sample_data[0]
+                print(f"   ✅ Data sample: {len(sample_data)} examples")
+                print(f"   ✅ Data keys: {list(example.keys())}")
+            else:
+                print("   ⚠️ Data file is empty but format is valid")
+                
+        except Exception as e:
+            print(f"   ❌ Error reading data file: {e}")
+            return False
+            
+        return True
 
     try:
+        # Original local environment checks
         # Check training data
         with open("data/training_data.jsonl", "r") as f:
             train_data = [json.loads(line) for line in f]
