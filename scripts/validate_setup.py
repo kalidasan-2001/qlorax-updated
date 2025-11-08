@@ -8,6 +8,7 @@ import sys
 import importlib
 from pathlib import Path
 
+
 def test_import(module_name, description):
     """Test importing a module and return success status."""
     try:
@@ -21,11 +22,12 @@ def test_import(module_name, description):
         print(f"⚠ {description} - {e}")
         return False
 
+
 def main():
     """Run all import tests."""
     print("🚀 QLORAX Project Setup Validation")
     print("=" * 50)
-    
+
     # Test core packages
     tests = [
         ("torch", "PyTorch - Deep Learning Framework"),
@@ -46,47 +48,50 @@ def main():
         ("black", "Black - Code Formatter"),
         ("pytest", "Pytest - Testing Framework"),
     ]
-    
+
     success_count = 0
     total_tests = len(tests)
-    
+
     for module, description in tests:
         if test_import(module, description):
             success_count += 1
-    
+
     print("\n" + "=" * 50)
     print(f"📊 Results: {success_count}/{total_tests} packages imported successfully")
-    
+
     # Check project structure
     print("\n🏗️  Project Structure Check:")
     project_root = Path.cwd()
     expected_dirs = ["configs", "data", "notebooks", "scripts"]
     expected_files = [".gitignore", "README.md", "requirements.txt"]
-    
+
     for dir_name in expected_dirs:
         dir_path = project_root / dir_name
         if dir_path.exists():
             print(f"✓ Directory: {dir_name}/")
         else:
             print(f"✗ Directory: {dir_name}/ - Missing")
-    
+
     for file_name in expected_files:
         file_path = project_root / file_name
         if file_path.exists():
             print(f"✓ File: {file_name}")
         else:
             print(f"✗ File: {file_name} - Missing")
-    
+
     # Display Python environment info
     print(f"\n🐍 Python Version: {sys.version}")
     print(f"📍 Current Directory: {project_root}")
-    
+
     if success_count >= total_tests * 0.8:  # 80% success rate
         print("\n🎉 Project setup looks good! You can start developing.")
         return 0
     else:
-        print(f"\n⚠️  Some packages are missing. Run 'pip install -r requirements.txt' to install missing dependencies.")
+        print(
+            f"\n⚠️  Some packages are missing. Run 'pip install -r requirements.txt' to install missing dependencies."
+        )
         return 1
+
 
 if __name__ == "__main__":
     sys.exit(main())

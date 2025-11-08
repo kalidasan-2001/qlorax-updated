@@ -14,21 +14,21 @@ sys.path.insert(0, str(project_dir))
 
 try:
     from axolotl.cli.train import do_cli
-    
+
     def main():
         # Set the config file path
         config_path = project_dir / "configs" / "default-qlora-config.yml"
-        
+
         if not config_path.exists():
             print(f"❌ Config file not found: {config_path}")
             return 1
-        
+
         print(f"🚀 Starting QLoRA fine-tuning with config: {config_path}")
         print("=" * 60)
-        
+
         # Prepare arguments for axolotl
         sys.argv = ["axolotl", "train", str(config_path)]
-        
+
         # Run the training
         try:
             do_cli()
@@ -37,6 +37,7 @@ try:
         except Exception as e:
             print(f"\n❌ Training failed with error: {e}")
             import traceback
+
             traceback.print_exc()
             return 1
 
