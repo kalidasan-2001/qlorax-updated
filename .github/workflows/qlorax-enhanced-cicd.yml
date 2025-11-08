@@ -87,7 +87,7 @@ jobs:
           safety check --json --output safety-report.json || true
           
       - name: 📤 Upload Security Reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: security-reports
@@ -271,7 +271,7 @@ jobs:
           python scripts/project_summary.py > performance_report.md
           
       - name: 📤 Upload Benchmark Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: benchmark-results-${{ github.sha }}
           path: |
