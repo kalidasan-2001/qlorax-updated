@@ -16,7 +16,7 @@ bitsandbytes==0.41.3.post2
 scipy==1.11.4
 
 # Axolotl - QLoRA fine-tuning framework
-axolotl==0.4.0
+axolotl==0.12.2
 
 # Quantization support
 optimum==1.16.1
