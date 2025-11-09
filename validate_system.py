@@ -45,14 +45,14 @@ def check_dependencies():
         "sklearn",
         "tqdm",
     ]
-    
+
     # Optional packages (nice to have but not critical)
     optional_packages = [
         "seaborn",
     ]
 
     missing_packages = []
-    
+
     # Check required packages
     for package in required_packages:
         try:
@@ -65,7 +65,7 @@ def check_dependencies():
         except ImportError:
             print(f"   ❌ {package}")
             missing_packages.append(package)
-    
+
     # Check optional packages (warnings only)
     missing_optional = []
     for package in optional_packages:

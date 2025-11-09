@@ -467,6 +467,16 @@ def main():
     parser.add_argument("--experiment-name", help="Name for the training experiment")
     parser.add_argument("--data", help="Override data path from config")
     parser.add_argument("--output", help="Override output directory from config")
+    parser.add_argument(
+        "--output-dir",
+        help="Override output directory from config (alias for --output)",
+    )
+    parser.add_argument(
+        "--dry-run", action="store_true", help="Run minimal training for validation"
+    )
+    parser.add_argument(
+        "--max-steps", type=int, help="Maximum number of training steps for dry run"
+    )
 
     # Evaluation arguments
     parser.add_argument(
@@ -492,6 +502,20 @@ def main():
             trainer.config["data_path"] = args.data
         if args.output:
             trainer.config["output_dir"] = args.output
+        if args.output_dir:
+            trainer.config["output_dir"] = args.output_dir
+
+        # Handle dry-run mode
+        if args.dry_run:
+            print("🏃‍♂️ Running in DRY RUN mode")
+            trainer.config["max_steps"] = args.max_steps or 1
+            trainer.config["save_steps"] = 1
+            trainer.config["eval_steps"] = 1
+            trainer.config["logging_steps"] = 1
+            # Reduce data size for dry run
+            trainer.config["max_train_samples"] = 10
+            if "warmup_steps" in trainer.config:
+                trainer.config["warmup_steps"] = 0
 
         # Run enhanced training
         if trainer.use_instructlab:
