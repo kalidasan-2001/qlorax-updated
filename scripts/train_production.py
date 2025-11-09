@@ -19,15 +19,10 @@ import yaml
 from datasets import Dataset, load_dataset
 from peft import LoraConfig, PeftModel, TaskType, get_peft_model
 from tqdm import tqdm
-from transformers import (
-    AutoModelForCausalLM,
-    AutoTokenizer,
-    DataCollatorForLanguageModeling,
-    EarlyStoppingCallback,
-    Trainer,
-    TrainingArguments,
-    get_linear_schedule_with_warmup,
-)
+from transformers import (AutoModelForCausalLM, AutoTokenizer,
+                          DataCollatorForLanguageModeling,
+                          EarlyStoppingCallback, Trainer, TrainingArguments,
+                          get_linear_schedule_with_warmup)
 
 # Configure logging
 logging.basicConfig(
