@@ -251,6 +251,7 @@ data/*.hdf5
 data/*.h5
 !data/sample/
 !data/curated.jsonl
+!data/training_data.jsonl
 
 # Model outputs and checkpoints
 models/
