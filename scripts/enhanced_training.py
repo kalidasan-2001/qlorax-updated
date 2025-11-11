@@ -375,13 +375,17 @@ class EnhancedQLORAXTrainer:
             else:
                 # Fallback implementation
                 logger.warning("Base trainer not available. Using simplified training.")
-                return self._run_simplified_training(enhanced_config)
+                return self._run_simplified_training(
+                    enhanced_config, synthetic_samples, domain
+                )
 
         except Exception as e:
             logger.error(f"Enhanced training failed: {e}")
             raise
 
-    def _run_simplified_training(self, config: Dict[str, Any]) -> Dict[str, Any]:
+    def _run_simplified_training(
+        self, config: Dict[str, Any], synthetic_samples: int = 0, domain: str = "custom"
+    ) -> Dict[str, Any]:
         """Simplified training implementation when base trainer is not available"""
         logger.info("Running simplified training implementation...")
 
@@ -394,6 +398,8 @@ class EnhancedQLORAXTrainer:
             "config": config,
             "enhancement_info": {
                 "instructlab_enabled": self.use_instructlab,
+                "synthetic_samples": synthetic_samples if self.use_instructlab else 0,
+                "domain": domain,
                 "experiment_name": config.get("experiment_name", "enhanced-qlora"),
             },
         }
@@ -573,8 +579,9 @@ def main():
             )
             print(f"🔬 InstructLab enabled: {enhancement_info['instructlab_enabled']}")
             if enhancement_info["instructlab_enabled"]:
-                print(f"🧪 Synthetic samples: {enhancement_info['synthetic_samples']}")
-                print(f"📋 Domain: {enhancement_info['domain']}")
+                synthetic_samples = enhancement_info.get("synthetic_samples", 0)
+                print(f"🧪 Synthetic samples: {synthetic_samples}")
+                print(f"📋 Domain: {enhancement_info.get('domain', 'custom')}")
 
         # Run impact evaluation if requested
         if args.evaluate_impact and args.baseline_model and args.test_data:
