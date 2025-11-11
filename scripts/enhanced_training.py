@@ -287,22 +287,22 @@ class EnhancedQLORAXTrainer:
 
             # Get original data path
             original_data_path = self.config.get("data_path", "data/curated.jsonl")
-            
+
             # Debug information for path resolution
             logger.info(f"Script location: {Path(__file__)}")
             logger.info(f"Current working directory: {Path.cwd()}")
             logger.info(f"Original data path from config: {original_data_path}")
-            
+
             # Make path relative to project root (parent of scripts directory)
             if not Path(original_data_path).is_absolute():
                 project_root = Path(__file__).parent.parent
                 full_data_path = project_root / original_data_path
             else:
                 full_data_path = Path(original_data_path)
-                
+
             logger.info(f"Resolved data path: {full_data_path}")
             logger.info(f"Data path exists: {full_data_path.exists()}")
-            
+
             if not full_data_path.exists():
                 # List contents of project root and data directory for debugging
                 project_root = Path(__file__).parent.parent
@@ -312,11 +312,11 @@ class EnhancedQLORAXTrainer:
                     logger.error(f"Data directory contents: {list(data_dir.iterdir())}")
                 else:
                     logger.error(f"Data directory does not exist: {data_dir}")
-                    
+
                 raise FileNotFoundError(
                     f"Training data not found: {original_data_path} (resolved to: {full_data_path})"
                 )
-            
+
             # Update the config to use the resolved path
             original_data_path = str(full_data_path)
 
