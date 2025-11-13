@@ -68,22 +68,22 @@ def get_model_info():
     if model is None:
         return """
         📋 **Model Status**: No model loaded (using placeholder responses)
-        
+
         🎯 **Expected Model**: TinyLlama-1.1B-Chat-v1.0 with QLoRA fine-tuning
-        
+
         ⚙️ **Configuration**:
         - Base Model: TinyLlama/TinyLlama-1.1B-Chat-v1.0
-        - Fine-tuning: QLoRA (Quantized LoRA) 
+        - Fine-tuning: QLoRA (Quantized LoRA)
         - Quantization: 4-bit NF4
         - LoRA Rank: 64, Alpha: 16
         - Target Layers: q_proj, v_proj, k_proj, o_proj, gate_proj, down_proj, up_proj
-        
+
         🚀 **To activate**: Train your model using `axolotl train configs/default-qlora-config.yml`
         """
     else:
         return f"""
         ✅ **Model Status**: Loaded and ready
-        
+
         📊 **Model Details**:
         - Vocabulary Size: {tokenizer.vocab_size if tokenizer else 'Unknown'}
         - Max Length: {tokenizer.model_max_length if tokenizer else 'Unknown'}
@@ -102,7 +102,7 @@ def create_interface():
         gr.Markdown(
             """
         # 🚀 QLORAX - QLoRA Fine-tuning Interface
-        
+
         Welcome to your QLoRA fine-tuned model interface! This demo allows you to interact with your fine-tuned TinyLlama model.
         """
         )
@@ -175,27 +175,27 @@ def create_interface():
             gr.Markdown(
                 """
             ## 🎯 About QLoRA (Quantized LoRA)
-            
+
             QLoRA is an efficient fine-tuning approach that combines:
-            
+
             ### 🔧 **Key Features**:
             - **4-bit Quantization**: Reduces memory usage by ~75%
             - **LoRA (Low-Rank Adaptation)**: Only trains a small subset of parameters
             - **Double Quantization**: Further memory optimization
             - **NF4 Data Type**: Optimal quantization for neural networks
-            
+
             ### 🎨 **Benefits**:
             - ✅ Fine-tune large models on consumer hardware
             - ✅ Faster training compared to full fine-tuning
             - ✅ Maintains model quality
             - ✅ Easy to swap adapters for different tasks
-            
+
             ### 🔬 **Technical Details**:
             - **LoRA Rank**: 64 (number of trainable parameters)
             - **LoRA Alpha**: 16 (scaling factor)
             - **Target Modules**: attention and MLP layers
             - **Quantization**: 4-bit NF4 with double quantization
-            
+
             ### 📖 **Resources**:
             - [QLoRA Paper](https://arxiv.org/abs/2305.14314)
             - [Axolotl Framework](https://github.com/OpenAccess-AI-Collective/axolotl)

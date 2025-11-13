@@ -38,8 +38,6 @@ tokenizer = None
 @app.on_event("startup")
 async def load_model():
     """Load the fine-tuned model on startup."""
-    global model, tokenizer
-
     # For now, this is a placeholder
     # When you have a trained model, uncomment and modify:
 

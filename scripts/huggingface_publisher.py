@@ -295,7 +295,7 @@ interface.launch()
 This model has been evaluated using the QLORAX enhanced benchmarking suite, which includes:
 
 - **ROUGE Scores:** Text similarity and overlap metrics
-- **BERT Scores:** Semantic similarity using BERT embeddings  
+- **BERT Scores:** Semantic similarity using BERT embeddings
 - **Coherence Metrics:** Response quality and logical consistency
 - **Domain-Specific Evaluation:** Task-specific performance metrics
 
@@ -304,7 +304,7 @@ This model has been evaluated using the QLORAX enhanced benchmarking suite, whic
 ### QLoRA Configuration
 
 - **Rank (r):** 8
-- **Alpha:** 16  
+- **Alpha:** 16
 - **Dropout:** 0.1
 - **Target Modules:** q_proj, v_proj, k_proj, o_proj, gate_proj, down_proj, up_proj
 - **Quantization:** 4-bit NF4 with double quantization
