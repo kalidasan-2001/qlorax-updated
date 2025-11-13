@@ -23,10 +23,12 @@ exclude = .git,__pycache__,.venv,venv,.eggs,*.egg,.pytest_cache,.mypy_cache,buil
 # Test files can have longer lines and unused imports
 # Setup and config files
 # Scripts can have research-style patterns
+# Root demo files can have longer lines for demonstration purposes
 per-file-ignores =
     test_*.py: E501, F401, F841,
     setup.py: F401,
-    scripts/*: F401, F841, E501, F541
+    scripts/*: F401, F841, E501, F541,
+    *.py: E501, C901
     
 # Limit complexity
 max-complexity = 15

@@ -74,7 +74,7 @@ jobs:
       - name: 📏 Code Linting
         run: |
           echo "📏 Linting with flake8..."
-          flake8 scripts/ .
+          flake8
           
       - name: 🔐 Security Scanning
         run: |
