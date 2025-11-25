@@ -1,34 +1,18 @@
 # 🚀 QLORAX Automated Fine-Tuning CI/CD Pipeline
-# Implements the complete workflow from synthetic data generation to deployment
+# DISABLED: This workflow is replaced by qlorax-enhanced-cicd.yml
+# Use the enhanced workflow which has better GPU/Docker handling
 
-name: QLORAX QLoRA Fine-Tuning Pipeline
+name: QLORAX QLoRA Fine-Tuning Pipeline (DISABLED)
 
+# Workflow is completely disabled - use qlorax-enhanced-cicd.yml instead
 on:
-  push:
-    branches: [ main, develop ]
-    paths:
-      - 'data/**'
-      - 'configs/**'
-      - 'scripts/**'
-      - 'docs/**'
-      - '.github/workflows/**'
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
     inputs:
-      domain:
-        description: 'Domain for synthetic data generation'
-        required: true
-        default: 'artificial_intelligence'
-        type: choice
-        options:
-          - artificial_intelligence
-          - machine_learning
-          - data_science
-          - healthcare
-          - finance
-      num_samples:
-        description: 'Number of synthetic samples to generate'
+      enable_disabled_workflow:
+        description: 'This workflow is disabled - use qlorax-enhanced-cicd.yml'
+        required: false
+        default: false
+        type: boolean
         required: true
         default: '25'
         type: string
