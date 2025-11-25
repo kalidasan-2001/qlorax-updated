@@ -75,7 +75,7 @@ class ModelBenchmark:
             print(f"📦 Loading base model: {base_model_name}")
             self.tokenizer = AutoTokenizer.from_pretrained(base_model_name)
             base_model = AutoModelForCausalLM.from_pretrained(
-                base_model_name, torch_dtype=torch.float16, device_map="auto"
+                base_model_name, torch_dtype=torch.float32, device_map="cpu"
             )
 
             print(f"🔗 Loading LoRA adapter from: {self.model_path}")
@@ -85,7 +85,7 @@ class ModelBenchmark:
             print(f"📦 Loading full model from: {self.model_path}")
             self.tokenizer = AutoTokenizer.from_pretrained(str(self.model_path))
             self.model = AutoModelForCausalLM.from_pretrained(
-                str(self.model_path), torch_dtype=torch.float16, device_map="auto"
+                str(self.model_path), torch_dtype=torch.float32, device_map="cpu"
             )
 
         if self.tokenizer.pad_token is None:
