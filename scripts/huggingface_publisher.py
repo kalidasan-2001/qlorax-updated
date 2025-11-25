@@ -13,7 +13,8 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 try:
-    from huggingface_hub import HfApi, create_repo, hf_hub_download, upload_folder
+    from huggingface_hub import (HfApi, create_repo, hf_hub_download,
+                                  upload_folder)
     from huggingface_hub.utils import RepositoryNotFoundError
 
     HF_AVAILABLE = True
