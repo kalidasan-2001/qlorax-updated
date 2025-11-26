@@ -244,7 +244,6 @@ data/processed/
 data/external/
 data/*.csv
 data/*.json
-data/*.jsonl
 data/*.parquet
 data/*.feather
 data/*.hdf5
@@ -253,6 +252,7 @@ data/*.h5
 !data/curated.jsonl
 !data/training_data.jsonl
 !data/test_data.jsonl
+!data/qlorax_instructlab_combined.jsonl
 
 # Model outputs and checkpoints
 models/
@@ -310,7 +310,9 @@ test_output/
 training_summary.json
 
 # InstructLab generated data
-data/instructlab_generated/
+# Allow tracking key synthetic data for reproducibility study
+data/instructlab_generated/*.jsonl
+!data/instructlab_generated/synthetic_data_*.jsonl
 data/test_synthetic/
 data/demo_combined.jsonl
 
