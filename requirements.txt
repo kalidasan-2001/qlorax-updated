@@ -11,7 +11,6 @@ tokenizers>=0.15.0
 accelerate>=0.24.0
 datasets>=2.14.0
 evaluate>=0.4.0
-huggingface_hub[hf_xet]>=0.20.0
 
 # Fine-tuning and Parameter Efficient Training
 peft>=0.6.0
