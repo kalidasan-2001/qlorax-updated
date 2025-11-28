@@ -1,0 +1,313 @@
+{
+  "artifacts_generated": {
+    "adapter_config.json": {
+      "path": "C:\\Users\\kalid\\NEWPROJECT\\qlorax-enhanced\\reproducibility\\artifacts\\golden_run_20251127_183554\\adapter_config.json",
+      "sha256": "856e4efdf94f0c37fc5ba44c16da29fde6a1c237df442c6a4b44275ceac02451"
+    },
+    "adapter_model.bin": {
+      "path": "C:\\Users\\kalid\\NEWPROJECT\\qlorax-enhanced\\reproducibility\\artifacts\\golden_run_20251127_183554\\adapter_model.bin",
+      "sha256": "ae1467d057a46bec7700f7d29d6e9c937e711d07198b43182aebb4d3b44321ba"
+    },
+    "env.json": {
+      "path": "C:\\Users\\kalid\\NEWPROJECT\\qlorax-enhanced\\reproducibility\\artifacts\\golden_run_20251127_183554\\env.json",
+      "sha256": "ff35be22806afc1ecc860323fdae95341833986525f1c15ca1aad6ef1018d13b"
+    },
+    "results.json": {
+      "path": "C:\\Users\\kalid\\NEWPROJECT\\qlorax-enhanced\\reproducibility\\artifacts\\golden_run_20251127_183554\\results.json",
+      "sha256": "efec8f8d3d24ac8efa7ccfeef15b5ec9ea335a257740bbb1aba905ab519fc99f"
+    },
+    "training_args.bin": {
+      "path": "C:\\Users\\kalid\\NEWPROJECT\\qlorax-enhanced\\reproducibility\\artifacts\\golden_run_20251127_183554\\training_args.bin",
+      "sha256": "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47"
+    }
+  },
+  "data_info": {
+    "data_hash": "6357ed415fa427130045cb18b862c60c7d0a6e0d91a32c6f57829ea8490f118f",
+    "data_path": "C:\\Users\\kalid\\NEWPROJECT\\qlorax-enhanced\\data\\qlorax_instructlab_combined.jsonl",
+    "sample_count": 28,
+    "samples": [
+      {
+        "input": "What is machine learning?",
+        "output": "Machine learning is a subset of artificial intelligence (AI) that enables computers to learn and make decisions from data without being explicitly programmed for every task. It involves algorithms that can identify patterns, make predictions, and improve their performance over time as they are exposed to more data. The core principle is that machines can learn from experience, similar to how humans learn, but through mathematical and statistical methods.",
+        "source": "original_qlorax"
+      },
+      {
+        "input": "Explain the concept of fine-tuning in the context of large language models.",
+        "output": "Fine-tuning in large language models refers to the process of taking a pre-trained model that has been trained on a large, general dataset and further training it on a smaller, task-specific dataset. This allows the model to adapt its knowledge to perform better on specific tasks or domains. During fine-tuning, the model's parameters are adjusted based on the new data, while retaining the broad understanding it gained during pre-training. This approach is much more efficient than training a model from scratch, as it leverages the existing knowledge and requires less computational resources and data.",
+        "source": "original_qlorax"
+      },
+      {
+        "input": "What are the benefits of using QLoRA for model fine-tuning?",
+        "output": "QLoRA (Quantized Low-Rank Adaptation) offers several key benefits for model fine-tuning: 1) **Memory Efficiency**: It significantly reduces memory usage by using 4-bit quantization, making it possible to fine-tune large models on consumer hardware. 2) **Speed**: Faster training times compared to full fine-tuning while maintaining similar performance. 3) **Parameter Efficiency**: Only trains a small subset of parameters through low-rank adapters, reducing storage requirements. 4) **Maintained Quality**: Preserves most of the original model's capabilities while adapting to new tasks. 5) **Accessibility**: Makes fine-tuning large language models accessible to researchers and practitioners with limited computational resources. 6) **Modularity**: LoRA adapters can be easily swapped or combined for different tasks.",
+        "source": "original_qlorax"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 1: What is machine learning?",
+        "output": "Enhanced answer: Machine learning is a subset of artificial intelligence that enables computers to learn from data without explicit programming.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 2: Explain QLoRA fine-tuning",
+        "output": "Enhanced answer: QLoRA (Quantized Low-Rank Adaptation) is an efficient fine-tuning method that uses 4-bit quantization and low-rank adapters to reduce memory usage while maintaining performance.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 3: How does parameter-efficient fine-tuning work?",
+        "output": "Enhanced answer: Parameter-efficient fine-tuning methods like LoRA only update a small subset of model parameters, making fine-tuning faster and more memory-efficient while preserving model capabilities.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 4: What is machine learning?",
+        "output": "Enhanced answer: Machine learning is a subset of artificial intelligence that enables computers to learn from data without explicit programming.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 5: Explain QLoRA fine-tuning",
+        "output": "Enhanced answer: QLoRA (Quantized Low-Rank Adaptation) is an efficient fine-tuning method that uses 4-bit quantization and low-rank adapters to reduce memory usage while maintaining performance.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 6: How does parameter-efficient fine-tuning work?",
+        "output": "Enhanced answer: Parameter-efficient fine-tuning methods like LoRA only update a small subset of model parameters, making fine-tuning faster and more memory-efficient while preserving model capabilities.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 7: What is machine learning?",
+        "output": "Enhanced answer: Machine learning is a subset of artificial intelligence that enables computers to learn from data without explicit programming.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 8: Explain QLoRA fine-tuning",
+        "output": "Enhanced answer: QLoRA (Quantized Low-Rank Adaptation) is an efficient fine-tuning method that uses 4-bit quantization and low-rank adapters to reduce memory usage while maintaining performance.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 9: How does parameter-efficient fine-tuning work?",
+        "output": "Enhanced answer: Parameter-efficient fine-tuning methods like LoRA only update a small subset of model parameters, making fine-tuning faster and more memory-efficient while preserving model capabilities.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 10: What is machine learning?",
+        "output": "Enhanced answer: Machine learning is a subset of artificial intelligence that enables computers to learn from data without explicit programming.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 11: Explain QLoRA fine-tuning",
+        "output": "Enhanced answer: QLoRA (Quantized Low-Rank Adaptation) is an efficient fine-tuning method that uses 4-bit quantization and low-rank adapters to reduce memory usage while maintaining performance.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 12: How does parameter-efficient fine-tuning work?",
+        "output": "Enhanced answer: Parameter-efficient fine-tuning methods like LoRA only update a small subset of model parameters, making fine-tuning faster and more memory-efficient while preserving model capabilities.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 13: What is machine learning?",
+        "output": "Enhanced answer: Machine learning is a subset of artificial intelligence that enables computers to learn from data without explicit programming.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 14: Explain QLoRA fine-tuning",
+        "output": "Enhanced answer: QLoRA (Quantized Low-Rank Adaptation) is an efficient fine-tuning method that uses 4-bit quantization and low-rank adapters to reduce memory usage while maintaining performance.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 15: How does parameter-efficient fine-tuning work?",
+        "output": "Enhanced answer: Parameter-efficient fine-tuning methods like LoRA only update a small subset of model parameters, making fine-tuning faster and more memory-efficient while preserving model capabilities.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 16: What is machine learning?",
+        "output": "Enhanced answer: Machine learning is a subset of artificial intelligence that enables computers to learn from data without explicit programming.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 17: Explain QLoRA fine-tuning",
+        "output": "Enhanced answer: QLoRA (Quantized Low-Rank Adaptation) is an efficient fine-tuning method that uses 4-bit quantization and low-rank adapters to reduce memory usage while maintaining performance.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 18: How does parameter-efficient fine-tuning work?",
+        "output": "Enhanced answer: Parameter-efficient fine-tuning methods like LoRA only update a small subset of model parameters, making fine-tuning faster and more memory-efficient while preserving model capabilities.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 19: What is machine learning?",
+        "output": "Enhanced answer: Machine learning is a subset of artificial intelligence that enables computers to learn from data without explicit programming.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 20: Explain QLoRA fine-tuning",
+        "output": "Enhanced answer: QLoRA (Quantized Low-Rank Adaptation) is an efficient fine-tuning method that uses 4-bit quantization and low-rank adapters to reduce memory usage while maintaining performance.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 21: How does parameter-efficient fine-tuning work?",
+        "output": "Enhanced answer: Parameter-efficient fine-tuning methods like LoRA only update a small subset of model parameters, making fine-tuning faster and more memory-efficient while preserving model capabilities.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 22: What is machine learning?",
+        "output": "Enhanced answer: Machine learning is a subset of artificial intelligence that enables computers to learn from data without explicit programming.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 23: Explain QLoRA fine-tuning",
+        "output": "Enhanced answer: QLoRA (Quantized Low-Rank Adaptation) is an efficient fine-tuning method that uses 4-bit quantization and low-rank adapters to reduce memory usage while maintaining performance.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 24: How does parameter-efficient fine-tuning work?",
+        "output": "Enhanced answer: Parameter-efficient fine-tuning methods like LoRA only update a small subset of model parameters, making fine-tuning faster and more memory-efficient while preserving model capabilities.",
+        "source": "instructlab_synthetic"
+      },
+      {
+        "domain": "demo_domain",
+        "generated_at": "2025-11-27T00:08:29.418051",
+        "input": "Variation 25: What is machine learning?",
+        "output": "Enhanced answer: Machine learning is a subset of artificial intelligence that enables computers to learn from data without explicit programming.",
+        "source": "instructlab_synthetic"
+      }
+    ]
+  },
+  "experiment_info": {
+    "output_directory": "C:\\Users\\kalid\\NEWPROJECT\\qlorax-enhanced\\reproducibility\\artifacts\\golden_run_20251127_183554",
+    "research_question": "To what extent can LoRA-based LLM fine-tuning be made reproducible?",
+    "run_type": "golden_run",
+    "timestamp": "2025-11-27T18:35:54.827234"
+  },
+  "lora_info": {
+    "lora_config": {
+      "bias": "none",
+      "fan_in_fan_out": false,
+      "init_lora_weights": true,
+      "lora_alpha": 16,
+      "lora_dropout": 0.1,
+      "r": 8,
+      "target_modules": [
+        "q_proj",
+        "v_proj",
+        "k_proj",
+        "o_proj"
+      ],
+      "task_type": "CAUSAL_LM"
+    },
+    "simulation_mode": true,
+    "total_params": 354823168,
+    "trainable_params": 65536,
+    "trainable_ratio": 0.00018470045338189417
+  },
+  "model_info": {
+    "model_device": "cpu",
+    "model_dtype": "torch.float32",
+    "model_name": "microsoft/DialoGPT-medium",
+    "parameters_estimated": 354823168,
+    "simulation_mode": true,
+    "tokenizer_vocab_size": 50257
+  },
+  "reproducibility_config": {
+    "cpu_only": true,
+    "deterministic_mode": true,
+    "environment_validation": true,
+    "fixed_precision": true,
+    "master_seed": 42
+  },
+  "training_results": {
+    "metrics": {
+      "epochs": 1,
+      "eval_loss": 0.6123,
+      "eval_perplexity": 1.8445,
+      "learning_rate": 0.0005,
+      "train_loss": 0.5234,
+      "train_perplexity": 1.6876,
+      "training_duration_seconds": 45.67,
+      "training_steps": 28
+    },
+    "status": "completed",
+    "timestamp": "2025-11-27T18:35:54.133516",
+    "training_config": {
+      "adam_beta1": 0.9,
+      "adam_beta2": 0.999,
+      "adam_epsilon": 1e-08,
+      "bf16": false,
+      "data_seed": 42,
+      "dataloader_drop_last": false,
+      "dataloader_num_workers": 0,
+      "dataloader_pin_memory": false,
+      "deterministic_mode": true,
+      "eval_accumulation_steps": 1,
+      "eval_steps": 500,
+      "fp16": false,
+      "gradient_accumulation_steps": 1,
+      "gradient_checkpointing": false,
+      "learning_rate": 0.0005,
+      "load_best_model_at_end": false,
+      "logging_steps": 1,
+      "lr_scheduler_type": "linear",
+      "max_grad_norm": 1.0,
+      "max_steps": -1,
+      "no_cuda": true,
+      "num_train_epochs": 1,
+      "per_device_eval_batch_size": 1,
+      "per_device_train_batch_size": 1,
+      "remove_unused_columns": true,
+      "report_to": [],
+      "reproducible_training": true,
+      "run_name": null,
+      "save_steps": 500,
+      "seed": 42,
+      "tf32": false,
+      "use_cpu": true,
+      "warmup_steps": 0,
+      "weight_decay": 0.01
+    }
+  }
+}

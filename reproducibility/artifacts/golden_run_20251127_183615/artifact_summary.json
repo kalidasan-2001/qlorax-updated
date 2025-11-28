@@ -1,0 +1,22 @@
+{
+  "artifact_checksums": {
+    "adapter_config.json": "856e4efdf94f0c37fc5ba44c16da29fde6a1c237df442c6a4b44275ceac02451",
+    "adapter_model.bin": "5fc45de827b599be4c715cc2204e448d40f5e46f5da2f236908bd1f0af962415",
+    "env.json": "adbf4896c090b178782f99d8b14a35c7e21efb2547b948f7cac055fbf2b65c95",
+    "results.json": "184f2854104db258666923b9bfdd8569b307f8df23333d1b5e4f4c232780091a",
+    "training_args.bin": "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47",
+    "training_metadata.json": "224565bca46be15296adee1f3abb0fde24b7a4aa6ccdbbda414493a4e5f05456"
+  },
+  "reproducibility_validation": {
+    "artifact_tracking": true,
+    "cpu_only_execution": true,
+    "deterministic_config_validated": true,
+    "fixed_seeds": true
+  },
+  "run_info": {
+    "output_directory": "C:\\Users\\kalid\\NEWPROJECT\\qlorax-enhanced\\reproducibility\\artifacts\\golden_run_20251127_183615",
+    "run_type": "golden_run",
+    "timestamp": "2025-11-27T18:36:16.487754",
+    "total_artifacts": 6
+  }
+}

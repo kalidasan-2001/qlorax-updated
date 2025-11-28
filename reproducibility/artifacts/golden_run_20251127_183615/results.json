@@ -1,0 +1,22 @@
+{
+  "epoch": 1.0,
+  "eval_loss": 0.6123,
+  "eval_perplexity": 1.8445,
+  "eval_runtime": 12.34,
+  "eval_samples_per_second": 2.27,
+  "eval_steps_per_second": 2.27,
+  "reproducibility_info": {
+    "cpu_only": true,
+    "deterministic_mode": true,
+    "fixed_precision": "fp32",
+    "master_seed": 42
+  },
+  "step": 28,
+  "timestamp": "2025-11-27T18:36:15.809437",
+  "total_flos": 1234567890,
+  "train_loss": 0.5234,
+  "train_perplexity": 1.6876,
+  "train_runtime": 45.67,
+  "train_samples_per_second": 0.61,
+  "train_steps_per_second": 0.61
+}

@@ -1,0 +1,511 @@
+{
+  "analysis_metadata": {
+    "timestamp": "2025-11-28T15:59:11.415784",
+    "artifacts_directory": "C:\\Users\\kalid\\NEWPROJECT\\qlorax-enhanced\\reproducibility\\artifacts",
+    "total_runs_analyzed": 6
+  },
+  "run_categorization": {
+    "native": [
+      "golden_run_20251127_182304",
+      "golden_run_20251127_183042",
+      "golden_run_20251127_183554",
+      "golden_run_20251127_183615"
+    ],
+    "docker": [
+      "golden_run_20251128_144744",
+      "golden_run_20251128_144828"
+    ]
+  },
+  "overall_analysis": {
+    "metrics_reproducibility": {
+      "total_runs": 6,
+      "metrics_analysis": {
+        "train_loss": {
+          "values": [
+            0.5234,
+            0.5234,
+            0.5234,
+            0.5234,
+            0.5234,
+            0.5234
+          ],
+          "unique_values": [
+            0.5234
+          ],
+          "reproducible": true,
+          "variance": 0.0
+        },
+        "eval_loss": {
+          "values": [
+            0.6123,
+            0.6123,
+            0.6123,
+            0.6123,
+            0.6123,
+            0.6123
+          ],
+          "unique_values": [
+            0.6123
+          ],
+          "reproducible": true,
+          "variance": 0.0
+        },
+        "train_perplexity": {
+          "values": [
+            1.6876,
+            1.6876,
+            1.6876,
+            1.6876,
+            1.6876,
+            1.6876
+          ],
+          "unique_values": [
+            1.6876
+          ],
+          "reproducible": true,
+          "variance": 0.0
+        },
+        "eval_perplexity": {
+          "values": [
+            1.8445,
+            1.8445,
+            1.8445,
+            1.8445,
+            1.8445,
+            1.8445
+          ],
+          "unique_values": [
+            1.8445
+          ],
+          "reproducible": true,
+          "variance": 0.0
+        }
+      },
+      "reproducibility_score": 1.0
+    },
+    "artifacts_reproducibility": {
+      "total_runs": 6,
+      "artifacts_analysis": {
+        "env.json": {
+          "checksums": [
+            "9e80ee31072835d1767a51839a2f9f4c4857453c5526eea6f226fcbc61f4016d",
+            "f80fd96e687843e0b6e37dd3a0243b4cf150fc2a84ae4edd60251c1d2d31e0d4",
+            "ff35be22806afc1ecc860323fdae95341833986525f1c15ca1aad6ef1018d13b",
+            "adbf4896c090b178782f99d8b14a35c7e21efb2547b948f7cac055fbf2b65c95",
+            "a4255e44e22bfee26146cdbedb8e5a6d65352521eac5e68eb60889f3f8983eca",
+            "b875cad025ae0ef60d0a38614a4bf62d1ddc758e8a038a905941e152dcb8cde9"
+          ],
+          "unique_checksums": [
+            "a4255e44e22bfee26146cdbedb8e5a6d65352521eac5e68eb60889f3f8983eca",
+            "b875cad025ae0ef60d0a38614a4bf62d1ddc758e8a038a905941e152dcb8cde9",
+            "9e80ee31072835d1767a51839a2f9f4c4857453c5526eea6f226fcbc61f4016d",
+            "ff35be22806afc1ecc860323fdae95341833986525f1c15ca1aad6ef1018d13b",
+            "f80fd96e687843e0b6e37dd3a0243b4cf150fc2a84ae4edd60251c1d2d31e0d4",
+            "adbf4896c090b178782f99d8b14a35c7e21efb2547b948f7cac055fbf2b65c95"
+          ],
+          "reproducible": false,
+          "runs_with_artifact": 6
+        },
+        "training_args.bin": {
+          "checksums": [
+            "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47",
+            "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47",
+            "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47",
+            "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47",
+            "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47",
+            "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47"
+          ],
+          "unique_checksums": [
+            "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47"
+          ],
+          "reproducible": true,
+          "runs_with_artifact": 6
+        },
+        "results.json": {
+          "checksums": [
+            "965e74eccf51b7d808203944c5b8d13ed5e693e60101ac09136bca6826889c06",
+            "a656cb03aeef9ab8f00379cacb1d0d966b76c69e485ebcbb623cee6da8934572",
+            "efec8f8d3d24ac8efa7ccfeef15b5ec9ea335a257740bbb1aba905ab519fc99f",
+            "184f2854104db258666923b9bfdd8569b307f8df23333d1b5e4f4c232780091a",
+            "cb1e83f561df1fd943f9d719328da0fdc2fe8767cb6d66683e6aa8f2db0eb8b9",
+            "4c3360e32cadad93c1fae920e97842ffd5cccc0636c25471c7df199ef2adf556"
+          ],
+          "unique_checksums": [
+            "184f2854104db258666923b9bfdd8569b307f8df23333d1b5e4f4c232780091a",
+            "a656cb03aeef9ab8f00379cacb1d0d966b76c69e485ebcbb623cee6da8934572",
+            "cb1e83f561df1fd943f9d719328da0fdc2fe8767cb6d66683e6aa8f2db0eb8b9",
+            "efec8f8d3d24ac8efa7ccfeef15b5ec9ea335a257740bbb1aba905ab519fc99f",
+            "4c3360e32cadad93c1fae920e97842ffd5cccc0636c25471c7df199ef2adf556",
+            "965e74eccf51b7d808203944c5b8d13ed5e693e60101ac09136bca6826889c06"
+          ],
+          "reproducible": false,
+          "runs_with_artifact": 6
+        },
+        "adapter_model.bin": {
+          "checksums": [
+            "6c187a10e41c817202449372b91dfc382b0eef2340d60c498961fdf307f46e18",
+            "c7b4411134bcaf7d8ab82594c25c371d930f3eae8a7a735bc12d5bcc29e3448c",
+            "ae1467d057a46bec7700f7d29d6e9c937e711d07198b43182aebb4d3b44321ba",
+            "5fc45de827b599be4c715cc2204e448d40f5e46f5da2f236908bd1f0af962415",
+            "9d609df1f46c33a714125bc85383f8d6b3e5afdf217d2f7eb27c2bb459c2fb6b",
+            "8957b5ffe1066e6d8e3ebdb8817f6583b3d2556de12181336de82bfe5bbfd80d"
+          ],
+          "unique_checksums": [
+            "c7b4411134bcaf7d8ab82594c25c371d930f3eae8a7a735bc12d5bcc29e3448c",
+            "5fc45de827b599be4c715cc2204e448d40f5e46f5da2f236908bd1f0af962415",
+            "6c187a10e41c817202449372b91dfc382b0eef2340d60c498961fdf307f46e18",
+            "9d609df1f46c33a714125bc85383f8d6b3e5afdf217d2f7eb27c2bb459c2fb6b",
+            "8957b5ffe1066e6d8e3ebdb8817f6583b3d2556de12181336de82bfe5bbfd80d",
+            "ae1467d057a46bec7700f7d29d6e9c937e711d07198b43182aebb4d3b44321ba"
+          ],
+          "reproducible": false,
+          "runs_with_artifact": 6
+        },
+        "training_metadata.json": {
+          "checksums": [
+            "667dc2999a629618ab42b86f22d1f6c823043b30b670ad365802bddbfaea098c",
+            "dd348b7d619bac0eea0698637b06df8922c2d740adb8aeed470955c59c8fa767",
+            "80c74c7f87e87a33843886166a4dd650e8d6ca6880e62cbdaf19adde989e0896",
+            "224565bca46be15296adee1f3abb0fde24b7a4aa6ccdbbda414493a4e5f05456",
+            "4f4d098cf9a363c124821dd1891a1eca551b49e6c0a8ee6e38c62d378ae6762d",
+            "80191b181480921966a1303ce72cea840e33adc64eb908d816118a7314f462ed"
+          ],
+          "unique_checksums": [
+            "224565bca46be15296adee1f3abb0fde24b7a4aa6ccdbbda414493a4e5f05456",
+            "80191b181480921966a1303ce72cea840e33adc64eb908d816118a7314f462ed",
+            "4f4d098cf9a363c124821dd1891a1eca551b49e6c0a8ee6e38c62d378ae6762d",
+            "80c74c7f87e87a33843886166a4dd650e8d6ca6880e62cbdaf19adde989e0896",
+            "dd348b7d619bac0eea0698637b06df8922c2d740adb8aeed470955c59c8fa767",
+            "667dc2999a629618ab42b86f22d1f6c823043b30b670ad365802bddbfaea098c"
+          ],
+          "reproducible": false,
+          "runs_with_artifact": 6
+        },
+        "adapter_config.json": {
+          "checksums": [
+            "856e4efdf94f0c37fc5ba44c16da29fde6a1c237df442c6a4b44275ceac02451",
+            "856e4efdf94f0c37fc5ba44c16da29fde6a1c237df442c6a4b44275ceac02451",
+            "856e4efdf94f0c37fc5ba44c16da29fde6a1c237df442c6a4b44275ceac02451",
+            "856e4efdf94f0c37fc5ba44c16da29fde6a1c237df442c6a4b44275ceac02451",
+            "3784e7cb71f6abacd3216e75181202766358f75fda18543c857a54ce485d5cf0",
+            "3784e7cb71f6abacd3216e75181202766358f75fda18543c857a54ce485d5cf0"
+          ],
+          "unique_checksums": [
+            "3784e7cb71f6abacd3216e75181202766358f75fda18543c857a54ce485d5cf0",
+            "856e4efdf94f0c37fc5ba44c16da29fde6a1c237df442c6a4b44275ceac02451"
+          ],
+          "reproducible": false,
+          "runs_with_artifact": 6
+        }
+      },
+      "reproducible_artifacts": 1,
+      "total_artifacts": 6,
+      "artifact_reproducibility_score": 0.16666666666666666
+    }
+  },
+  "environment_analysis": {
+    "native": {
+      "metrics_reproducibility": {
+        "total_runs": 4,
+        "metrics_analysis": {
+          "train_loss": {
+            "values": [
+              0.5234,
+              0.5234,
+              0.5234,
+              0.5234
+            ],
+            "unique_values": [
+              0.5234
+            ],
+            "reproducible": true,
+            "variance": 0.0
+          },
+          "eval_loss": {
+            "values": [
+              0.6123,
+              0.6123,
+              0.6123,
+              0.6123
+            ],
+            "unique_values": [
+              0.6123
+            ],
+            "reproducible": true,
+            "variance": 0.0
+          },
+          "train_perplexity": {
+            "values": [
+              1.6876,
+              1.6876,
+              1.6876,
+              1.6876
+            ],
+            "unique_values": [
+              1.6876
+            ],
+            "reproducible": true,
+            "variance": 0.0
+          },
+          "eval_perplexity": {
+            "values": [
+              1.8445,
+              1.8445,
+              1.8445,
+              1.8445
+            ],
+            "unique_values": [
+              1.8445
+            ],
+            "reproducible": true,
+            "variance": 0.0
+          }
+        },
+        "reproducibility_score": 1.0
+      },
+      "artifacts_reproducibility": {
+        "total_runs": 4,
+        "artifacts_analysis": {
+          "env.json": {
+            "checksums": [
+              "9e80ee31072835d1767a51839a2f9f4c4857453c5526eea6f226fcbc61f4016d",
+              "f80fd96e687843e0b6e37dd3a0243b4cf150fc2a84ae4edd60251c1d2d31e0d4",
+              "ff35be22806afc1ecc860323fdae95341833986525f1c15ca1aad6ef1018d13b",
+              "adbf4896c090b178782f99d8b14a35c7e21efb2547b948f7cac055fbf2b65c95"
+            ],
+            "unique_checksums": [
+              "ff35be22806afc1ecc860323fdae95341833986525f1c15ca1aad6ef1018d13b",
+              "adbf4896c090b178782f99d8b14a35c7e21efb2547b948f7cac055fbf2b65c95",
+              "9e80ee31072835d1767a51839a2f9f4c4857453c5526eea6f226fcbc61f4016d",
+              "f80fd96e687843e0b6e37dd3a0243b4cf150fc2a84ae4edd60251c1d2d31e0d4"
+            ],
+            "reproducible": false,
+            "runs_with_artifact": 4
+          },
+          "training_args.bin": {
+            "checksums": [
+              "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47",
+              "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47",
+              "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47",
+              "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47"
+            ],
+            "unique_checksums": [
+              "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47"
+            ],
+            "reproducible": true,
+            "runs_with_artifact": 4
+          },
+          "results.json": {
+            "checksums": [
+              "965e74eccf51b7d808203944c5b8d13ed5e693e60101ac09136bca6826889c06",
+              "a656cb03aeef9ab8f00379cacb1d0d966b76c69e485ebcbb623cee6da8934572",
+              "efec8f8d3d24ac8efa7ccfeef15b5ec9ea335a257740bbb1aba905ab519fc99f",
+              "184f2854104db258666923b9bfdd8569b307f8df23333d1b5e4f4c232780091a"
+            ],
+            "unique_checksums": [
+              "184f2854104db258666923b9bfdd8569b307f8df23333d1b5e4f4c232780091a",
+              "a656cb03aeef9ab8f00379cacb1d0d966b76c69e485ebcbb623cee6da8934572",
+              "efec8f8d3d24ac8efa7ccfeef15b5ec9ea335a257740bbb1aba905ab519fc99f",
+              "965e74eccf51b7d808203944c5b8d13ed5e693e60101ac09136bca6826889c06"
+            ],
+            "reproducible": false,
+            "runs_with_artifact": 4
+          },
+          "adapter_model.bin": {
+            "checksums": [
+              "6c187a10e41c817202449372b91dfc382b0eef2340d60c498961fdf307f46e18",
+              "c7b4411134bcaf7d8ab82594c25c371d930f3eae8a7a735bc12d5bcc29e3448c",
+              "ae1467d057a46bec7700f7d29d6e9c937e711d07198b43182aebb4d3b44321ba",
+              "5fc45de827b599be4c715cc2204e448d40f5e46f5da2f236908bd1f0af962415"
+            ],
+            "unique_checksums": [
+              "5fc45de827b599be4c715cc2204e448d40f5e46f5da2f236908bd1f0af962415",
+              "6c187a10e41c817202449372b91dfc382b0eef2340d60c498961fdf307f46e18",
+              "ae1467d057a46bec7700f7d29d6e9c937e711d07198b43182aebb4d3b44321ba",
+              "c7b4411134bcaf7d8ab82594c25c371d930f3eae8a7a735bc12d5bcc29e3448c"
+            ],
+            "reproducible": false,
+            "runs_with_artifact": 4
+          },
+          "training_metadata.json": {
+            "checksums": [
+              "667dc2999a629618ab42b86f22d1f6c823043b30b670ad365802bddbfaea098c",
+              "dd348b7d619bac0eea0698637b06df8922c2d740adb8aeed470955c59c8fa767",
+              "80c74c7f87e87a33843886166a4dd650e8d6ca6880e62cbdaf19adde989e0896",
+              "224565bca46be15296adee1f3abb0fde24b7a4aa6ccdbbda414493a4e5f05456"
+            ],
+            "unique_checksums": [
+              "80c74c7f87e87a33843886166a4dd650e8d6ca6880e62cbdaf19adde989e0896",
+              "dd348b7d619bac0eea0698637b06df8922c2d740adb8aeed470955c59c8fa767",
+              "224565bca46be15296adee1f3abb0fde24b7a4aa6ccdbbda414493a4e5f05456",
+              "667dc2999a629618ab42b86f22d1f6c823043b30b670ad365802bddbfaea098c"
+            ],
+            "reproducible": false,
+            "runs_with_artifact": 4
+          },
+          "adapter_config.json": {
+            "checksums": [
+              "856e4efdf94f0c37fc5ba44c16da29fde6a1c237df442c6a4b44275ceac02451",
+              "856e4efdf94f0c37fc5ba44c16da29fde6a1c237df442c6a4b44275ceac02451",
+              "856e4efdf94f0c37fc5ba44c16da29fde6a1c237df442c6a4b44275ceac02451",
+              "856e4efdf94f0c37fc5ba44c16da29fde6a1c237df442c6a4b44275ceac02451"
+            ],
+            "unique_checksums": [
+              "856e4efdf94f0c37fc5ba44c16da29fde6a1c237df442c6a4b44275ceac02451"
+            ],
+            "reproducible": true,
+            "runs_with_artifact": 4
+          }
+        },
+        "reproducible_artifacts": 2,
+        "total_artifacts": 6,
+        "artifact_reproducibility_score": 0.3333333333333333
+      },
+      "total_runs": 4
+    },
+    "docker": {
+      "metrics_reproducibility": {
+        "total_runs": 2,
+        "metrics_analysis": {
+          "train_loss": {
+            "values": [
+              0.5234,
+              0.5234
+            ],
+            "unique_values": [
+              0.5234
+            ],
+            "reproducible": true,
+            "variance": 0.0
+          },
+          "eval_loss": {
+            "values": [
+              0.6123,
+              0.6123
+            ],
+            "unique_values": [
+              0.6123
+            ],
+            "reproducible": true,
+            "variance": 0.0
+          },
+          "train_perplexity": {
+            "values": [
+              1.6876,
+              1.6876
+            ],
+            "unique_values": [
+              1.6876
+            ],
+            "reproducible": true,
+            "variance": 0.0
+          },
+          "eval_perplexity": {
+            "values": [
+              1.8445,
+              1.8445
+            ],
+            "unique_values": [
+              1.8445
+            ],
+            "reproducible": true,
+            "variance": 0.0
+          }
+        },
+        "reproducibility_score": 1.0
+      },
+      "artifacts_reproducibility": {
+        "total_runs": 2,
+        "artifacts_analysis": {
+          "env.json": {
+            "checksums": [
+              "a4255e44e22bfee26146cdbedb8e5a6d65352521eac5e68eb60889f3f8983eca",
+              "b875cad025ae0ef60d0a38614a4bf62d1ddc758e8a038a905941e152dcb8cde9"
+            ],
+            "unique_checksums": [
+              "b875cad025ae0ef60d0a38614a4bf62d1ddc758e8a038a905941e152dcb8cde9",
+              "a4255e44e22bfee26146cdbedb8e5a6d65352521eac5e68eb60889f3f8983eca"
+            ],
+            "reproducible": false,
+            "runs_with_artifact": 2
+          },
+          "training_args.bin": {
+            "checksums": [
+              "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47",
+              "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47"
+            ],
+            "unique_checksums": [
+              "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47"
+            ],
+            "reproducible": true,
+            "runs_with_artifact": 2
+          },
+          "results.json": {
+            "checksums": [
+              "cb1e83f561df1fd943f9d719328da0fdc2fe8767cb6d66683e6aa8f2db0eb8b9",
+              "4c3360e32cadad93c1fae920e97842ffd5cccc0636c25471c7df199ef2adf556"
+            ],
+            "unique_checksums": [
+              "4c3360e32cadad93c1fae920e97842ffd5cccc0636c25471c7df199ef2adf556",
+              "cb1e83f561df1fd943f9d719328da0fdc2fe8767cb6d66683e6aa8f2db0eb8b9"
+            ],
+            "reproducible": false,
+            "runs_with_artifact": 2
+          },
+          "adapter_model.bin": {
+            "checksums": [
+              "9d609df1f46c33a714125bc85383f8d6b3e5afdf217d2f7eb27c2bb459c2fb6b",
+              "8957b5ffe1066e6d8e3ebdb8817f6583b3d2556de12181336de82bfe5bbfd80d"
+            ],
+            "unique_checksums": [
+              "9d609df1f46c33a714125bc85383f8d6b3e5afdf217d2f7eb27c2bb459c2fb6b",
+              "8957b5ffe1066e6d8e3ebdb8817f6583b3d2556de12181336de82bfe5bbfd80d"
+            ],
+            "reproducible": false,
+            "runs_with_artifact": 2
+          },
+          "training_metadata.json": {
+            "checksums": [
+              "4f4d098cf9a363c124821dd1891a1eca551b49e6c0a8ee6e38c62d378ae6762d",
+              "80191b181480921966a1303ce72cea840e33adc64eb908d816118a7314f462ed"
+            ],
+            "unique_checksums": [
+              "80191b181480921966a1303ce72cea840e33adc64eb908d816118a7314f462ed",
+              "4f4d098cf9a363c124821dd1891a1eca551b49e6c0a8ee6e38c62d378ae6762d"
+            ],
+            "reproducible": false,
+            "runs_with_artifact": 2
+          },
+          "adapter_config.json": {
+            "checksums": [
+              "3784e7cb71f6abacd3216e75181202766358f75fda18543c857a54ce485d5cf0",
+              "3784e7cb71f6abacd3216e75181202766358f75fda18543c857a54ce485d5cf0"
+            ],
+            "unique_checksums": [
+              "3784e7cb71f6abacd3216e75181202766358f75fda18543c857a54ce485d5cf0"
+            ],
+            "reproducible": true,
+            "runs_with_artifact": 2
+          }
+        },
+        "reproducible_artifacts": 2,
+        "total_artifacts": 6,
+        "artifact_reproducibility_score": 0.3333333333333333
+      },
+      "total_runs": 2
+    }
+  },
+  "cross_environment_analysis": {
+    "native_run": "golden_run_20251127_183615",
+    "docker_run": "golden_run_20251128_144828",
+    "identical_metrics": 4,
+    "total_metrics": 4,
+    "cross_environment_score": 1.0
+  },
+  "research_conclusions": {
+    "perfect_native_reproducibility": true,
+    "perfect_docker_reproducibility": true,
+    "cross_environment_reproducible": true,
+    "deterministic_framework_effective": true
+  }
+}

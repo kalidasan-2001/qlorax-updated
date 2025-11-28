@@ -1,0 +1,22 @@
+{
+  "artifact_checksums": {
+    "adapter_config.json": "3784e7cb71f6abacd3216e75181202766358f75fda18543c857a54ce485d5cf0",
+    "adapter_model.bin": "9d609df1f46c33a714125bc85383f8d6b3e5afdf217d2f7eb27c2bb459c2fb6b",
+    "env.json": "a4255e44e22bfee26146cdbedb8e5a6d65352521eac5e68eb60889f3f8983eca",
+    "results.json": "cb1e83f561df1fd943f9d719328da0fdc2fe8767cb6d66683e6aa8f2db0eb8b9",
+    "training_args.bin": "636e264cfdd8d580d751a5c9b5e27b89a317ad374791740a5f938f85fe023f47",
+    "training_metadata.json": "4f4d098cf9a363c124821dd1891a1eca551b49e6c0a8ee6e38c62d378ae6762d"
+  },
+  "reproducibility_validation": {
+    "artifact_tracking": true,
+    "cpu_only_execution": true,
+    "deterministic_config_validated": true,
+    "fixed_seeds": true
+  },
+  "run_info": {
+    "output_directory": "artifacts/golden_run_20251128_144744",
+    "run_type": "golden_run",
+    "timestamp": "2025-11-28T14:47:44.217458",
+    "total_artifacts": 6
+  }
+}
