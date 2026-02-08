@@ -170,7 +170,7 @@ jobs:
           cat data/variants/dataset_metadata.json
           
       - name: Upload Dataset Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: qlorax-datasets-${{ github.sha }}
           path: |
@@ -460,7 +460,7 @@ jobs:
           cat reproducibility_manifest.json | python -m json.tool
           
       - name: Upload Manifest
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: reproducibility-manifest-${{ github.sha }}
           path: reproducibility_manifest.json
