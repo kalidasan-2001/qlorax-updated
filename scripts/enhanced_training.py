@@ -17,6 +17,32 @@ import torch
 import yaml
 from datasets import Dataset, load_dataset
 
+# NEW: Hybrid Dataset Support
+def load_hybrid_dataset(variant: str = "hybrid_70_30"):
+    """Load hybrid dataset variant (curated 70% + synthetic 30%)"""
+    import json
+    from pathlib import Path
+    
+    variant_file = Path(f"data/variants/{variant}.jsonl")
+    if not variant_file.exists():
+        logger.warning(f"Hybrid dataset not found: {variant_file}")
+        return None
+    
+    samples = []
+    with open(variant_file, 'r', encoding='utf-8') as f:
+        for line in f:
+            samples.append(json.loads(line))
+    
+    curated = sum(1 for s in samples if s.get('metadata', {}).get('source') == 'curated')
+    synthetic = sum(1 for s in samples if s.get('metadata', {}).get('source') == 'instructlab_synthetic')
+    
+    logger.info(f"Loaded {len(samples)} samples from {variant}")
+    logger.info(f"  Curated: {curated} ({curated/len(samples)*100:.1f}%)")
+    logger.info(f"  Synthetic: {synthetic} ({synthetic/len(samples)*100:.1f}%)")
+    
+    return samples
+
+
 # Import QLORAX components
 try:
     from scripts.instructlab_integration import QLORAXInstructLab
@@ -44,6 +70,7 @@ class EnhancedQLORAXTrainer:
         config_path: str,
         instructlab_config_path: str = None,
         use_instructlab: bool = True,
+        dataset_variant: str = "hybrid_70_30",  # NEW: Dataset variant selection
     ):
         """Initialize enhanced trainer
 
@@ -53,6 +80,7 @@ class EnhancedQLORAXTrainer:
             use_instructlab: Whether to enable InstructLab features
         """
         self.config_path = config_path
+        self.dataset_variant = dataset_variant  # Store variant choice
         self.config = self.load_config(config_path)
         self.use_instructlab = use_instructlab
 
@@ -183,7 +211,23 @@ class EnhancedQLORAXTrainer:
         """
         logger.info("Preparing enhanced dataset...")
 
-        # Generate synthetic data if InstructLab is available
+        # PRIORITY 1: Use hybrid dataset variant if specified
+        if hasattr(self, 'dataset_variant') and self.dataset_variant:
+            logger.info(f"Loading hybrid dataset variant: {self.dataset_variant}")
+            hybrid_samples = load_hybrid_dataset(self.dataset_variant)
+            if hybrid_samples:
+                # Save to temp file for training compatibility
+                output_path = Path(f"data/temp/{self.dataset_variant}_training.jsonl")
+                output_path.parent.mkdir(parents=True, exist_ok=True)
+                
+                with open(output_path, 'w', encoding='utf-8') as f:
+                    for sample in hybrid_samples:
+                        f.write(json.dumps(sample) + '\n')
+                
+                logger.info(f"Hybrid dataset ready: {output_path}")
+                return str(output_path)
+
+        # PRIORITY 2: Generate synthetic data if InstructLab is available
         if self.use_instructlab and self.instructlab:
             synthetic_data_path = self.generate_synthetic_data(
                 num_samples=synthetic_samples,
@@ -375,17 +419,13 @@ class EnhancedQLORAXTrainer:
             else:
                 # Fallback implementation
                 logger.warning("Base trainer not available. Using simplified training.")
-                return self._run_simplified_training(
-                    enhanced_config, synthetic_samples, domain
-                )
+                return self._run_simplified_training(enhanced_config)
 
         except Exception as e:
             logger.error(f"Enhanced training failed: {e}")
             raise
 
-    def _run_simplified_training(
-        self, config: Dict[str, Any], synthetic_samples: int = 0, domain: str = "custom"
-    ) -> Dict[str, Any]:
+    def _run_simplified_training(self, config: Dict[str, Any]) -> Dict[str, Any]:
         """Simplified training implementation when base trainer is not available"""
         logger.info("Running simplified training implementation...")
 
@@ -398,8 +438,6 @@ class EnhancedQLORAXTrainer:
             "config": config,
             "enhancement_info": {
                 "instructlab_enabled": self.use_instructlab,
-                "synthetic_samples": synthetic_samples if self.use_instructlab else 0,
-                "domain": domain,
                 "experiment_name": config.get("experiment_name", "enhanced-qlora"),
             },
         }
@@ -497,6 +535,14 @@ def main():
         help="Knowledge source files for domain-specific generation",
     )
 
+    # Dataset variant argument
+    parser.add_argument(
+        "--dataset-variant",
+        default="hybrid_70_30",
+        choices=["curated_only", "synthetic_only", "hybrid_70_30"],
+        help="Dataset variant to use (curated_only, synthetic_only, or hybrid_70_30)"
+    )
+
     # Training arguments
     parser.add_argument("--experiment-name", help="Name for the training experiment")
     parser.add_argument("--data", help="Override data path from config")
@@ -527,6 +573,7 @@ def main():
         # Initialize enhanced trainer
         trainer = EnhancedQLORAXTrainer(
             config_path=args.config,
+            dataset_variant=args.dataset_variant,
             instructlab_config_path=args.instructlab_config,
             use_instructlab=not args.no_instructlab,
         )
@@ -579,9 +626,8 @@ def main():
             )
             print(f"🔬 InstructLab enabled: {enhancement_info['instructlab_enabled']}")
             if enhancement_info["instructlab_enabled"]:
-                synthetic_samples = enhancement_info.get("synthetic_samples", 0)
-                print(f"🧪 Synthetic samples: {synthetic_samples}")
-                print(f"📋 Domain: {enhancement_info.get('domain', 'custom')}")
+                print(f"🧪 Synthetic samples: {enhancement_info['synthetic_samples']}")
+                print(f"📋 Domain: {enhancement_info['domain']}")
 
         # Run impact evaluation if requested
         if args.evaluate_impact and args.baseline_model and args.test_data:

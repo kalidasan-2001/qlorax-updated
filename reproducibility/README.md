@@ -23,8 +23,35 @@
 
 ## 🎯 Research Question
 
-**"To what extent can LoRA-based LLM fine-tuning and deployment be made reproducible by automating the workflow with Docker and GitHub Actions, measured by bit-identical artifacts, consistent deployment images, and repeatable inference behavior on CPU-only infrastructure?"**
+**graph TD
+    subgraph "Phase 1: Data Enhancement (InstructLab)"
+        A[Knowledge Docs] -->|Extract| B(Taxonomy YAML)
+        B -->|Generate| C[Synthetic Data Generation]
+        C -->|Validate| D[Synthetic Dataset]
+        E[Original Curated Data] -->|Merge| F{Data Integration}
+        D --> F
+        F -->|Output| G[Enhanced Dataset .jsonl]
+    end
 
+    subgraph "Phase 2: Dynamic Configuration"
+        H[Base Config] -->|Load| I{Enhancement Logic}
+        G --> I
+        I -->|Adjust LR & Warmup| J[Enhanced Config]
+    end
+
+    subgraph "Phase 3: QLoRA Training"
+        K[Base Model: TinyLlama] -->|Load 4-bit| L[Quantized Model]
+        J --> L
+        L -->|Attach Adapters| M[PEFT Model]
+        M -->|Train| N[Training Loop]
+        N -->|Save| O[Enhanced Adapters]
+    end
+
+    subgraph "Phase 4: Validation"
+        O -->|Compare| P[Impact Evaluation]
+        Q[Baseline Model] --> P
+        P -->|Metrics| R[Improvement Score]
+    end
 ## 📊 Executive Summary
 
 ### ✅ **PERFECT REPRODUCIBILITY ACHIEVED: 100%**

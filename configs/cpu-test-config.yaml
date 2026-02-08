@@ -1,0 +1,36 @@
+# CPU-Only Training Config (No Quantization)
+# For testing the hybrid dataset pipeline
+
+model:
+  base_model: "gpt2"  # Small model that works on CPU
+  model_type: "gpt2"
+
+training:
+  output_dir: "./models/cpu-test-run"
+  num_epochs: 1
+  max_steps: 5  # Just 5 steps to test the pipeline
+  batch_size: 1
+  gradient_accumulation_steps: 2
+  learning_rate: 0.0001
+  warmup_steps: 1
+  logging_steps: 1
+  save_steps: 5
+  save_total_limit: 1
+
+lora:
+  lora_r: 8  # Small rank for CPU
+  lora_alpha: 16
+  lora_dropout: 0.05
+  # NO quantization for CPU
+  load_in_4bit: false
+  load_in_8bit: false
+
+optimization:
+  gradient_checkpointing: true
+  optim: "adamw_torch"
+  bf16: false  # CPU doesn't support bf16
+  fp16: false
+
+dataset:
+  max_seq_length: 256  # Shorter for CPU
+  val_set_size: 0.1
