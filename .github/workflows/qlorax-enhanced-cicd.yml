@@ -233,7 +233,7 @@ jobs:
         run: |
           cat > test_training.py << 'PYCODE'
           import torch
-          from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments, Trainer
+          from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments, Trainer, DataCollatorForLanguageModeling
           from datasets import load_dataset
           
           print("Loading mini dataset...")
@@ -256,6 +256,7 @@ jobs:
           model = AutoModelForCausalLM.from_pretrained("gpt2")
           
           print("Setting up training...")
+          data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
           training_args = TrainingArguments(
               output_dir="./test_output",
               max_steps=2,
@@ -269,7 +270,8 @@ jobs:
               model=model,
               args=training_args,
               train_dataset=dataset['train'],
-              eval_dataset=dataset['test']
+              eval_dataset=dataset['test'],
+              data_collator=data_collator
           )
           
           print("Starting mini training (2 steps)...")
