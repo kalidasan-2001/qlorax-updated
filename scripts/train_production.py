@@ -155,9 +155,15 @@ class ProductionTrainer:
         # Load model
         model_kwargs = {
             "torch_dtype": getattr(torch, self.config.get("torch_dtype", "float16")),
-            "device_map": self.config.get("device_map", "auto"),
+            # device_map passed conditionally later
             "trust_remote_code": self.config.get("trust_remote_code", False),
         }
+
+        # Always set device_map. For QLoRA, we often need explicit mapping.
+        d_map = self.config.get("device_map", "auto")
+        if d_map == "cuda:0":
+            d_map = {"": 0} # Fix for single GPU QLoRA
+        model_kwargs["device_map"] = d_map
 
         # Add quantization config if specified
         if self.config.get("load_in_4bit", False):

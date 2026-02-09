@@ -1,73 +1,56 @@
-# QLORAX Production Configuration
-# Optimized for TinyLlama 1.1B with QLoRA fine-tuning
-
-# Model Configuration
-model_name: "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
-torch_dtype: "float32"  # Use float32 for CPU compatibility
-device_map: "cpu"  # Force CPU usage for compatibility
-trust_remote_code: false
-
-# Data Configuration
-data_path: "data/training_data.jsonl"
-validation_split: 0.1
-prompt_template: "### Input:\n{input}\n\n### Output:\n{output}"
-max_length: 1024
-
-# QLoRA Configuration (CPU-compatible)
-load_in_4bit: false  # Disabled for CPU compatibility
-bnb_4bit_quant_type: "nf4"
-bnb_4bit_use_double_quant: false
-bnb_4bit_compute_dtype: "float32"
-
-# LoRA Parameters
-lora_r: 32
-lora_alpha: 64
-lora_dropout: 0.05
-lora_target_modules:
-  - "q_proj"
-  - "v_proj" 
-  - "k_proj"
-  - "o_proj"
-  - "gate_proj"
-  - "down_proj"
-  - "up_proj"
-lora_bias: "none"
-
-# Training Parameters (CPU-optimized)
-num_epochs: 1  # Reduced for CPU training
-per_device_train_batch_size: 1
-per_device_eval_batch_size: 1
-gradient_accumulation_steps: 2  # Reduced for CPU
-learning_rate: 5.0e-5  # Reduced learning rate
-weight_decay: 0.01
 adam_beta1: 0.9
 adam_beta2: 0.999
-max_grad_norm: 1.0
-
-# Learning Rate Schedule
-lr_scheduler_type: "cosine"
-warmup_ratio: 0.1
-
-# Optimization (CPU-compatible)
-fp16: false
-bf16: false  # Disabled for CPU compatibility
-gradient_checkpointing: false  # Disabled for CPU performance
+bf16: false
+bnb_4bit_compute_dtype: float16
+bnb_4bit_quant_type: nf4
+bnb_4bit_use_double_quant: false
+data_path: data/variants/hybrid_70_30.jsonl
 dataloader_num_workers: 0
-
-# Logging and Saving
-output_dir: "models/production-model"
+device_map: cuda:0
+early_stopping_patience: 3
+eval_steps: 500
+experiment_name: tinyllama-qlora-v1
+fp16: false
+gradient_accumulation_steps: 2
+gradient_checkpointing: false
+learning_rate: 5.0e-05
+load_in_4bit: true
 logging_steps: 10
+lora_alpha: 64
+lora_bias: none
+lora_dropout: 0.05
+lora_r: 32
+lora_target_modules:
+- q_proj
+- v_proj
+- k_proj
+- o_proj
+- gate_proj
+- down_proj
+- up_proj
+lr_scheduler_type: cosine
+max_grad_norm: 1.0
+max_length: 1024
+model_name: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+num_epochs: 1
+output_dir: models/production-model
+per_device_eval_batch_size: 1
+per_device_train_batch_size: 1
+prompt_template: '### Instruction:
+
+  {instruction}
+
+
+  ### Output:
+
+  {output}'
 save_steps: 500
 save_total_limit: 3
-eval_steps: 500
-
-# Early Stopping
-early_stopping_patience: 3
-
-# Monitoring
-use_wandb: false  # Disabled by default - set to true and configure wandb if needed
-wandb_project: "qlorax-production"
-experiment_name: "tinyllama-qlora-v1"
-
-# Reproducibility
 seed: 42
+torch_dtype: float16
+trust_remote_code: false
+use_wandb: false
+validation_split: 0.1
+wandb_project: qlorax-production
+warmup_ratio: 0.1
+weight_decay: 0.01
