@@ -79,51 +79,79 @@ def load_curated_data(filepath: str = "data/curated_seed_data.jsonl") -> List[Di
     return samples
 
 def load_instructlab_data(directory: str = "data/instructlab_real") -> List[Dict]:
-    """Load and convert InstructLab synthetic data"""
+    """Load and convert InstructLab synthetic data (Checks ONLY the latest file to prevent duplication)"""
     samples = []
     invalid_count = 0
     
     data_path = Path(directory)
+    if not data_path.exists():
+        print(f"Warning: {directory} does not exist.")
+        return []
     
-    # Try different file patterns
-    patterns = ["test_*.jsonl", "*.jsonl", "preprocessed_*/compositional_skills_qlorax.jsonl"]
+    # Find all potential files with their sortable keys
+    candidate_files = []
     
-    for pattern in patterns:
-        for jsonl_file in data_path.glob(pattern):
-            with open(jsonl_file, 'r', encoding='utf-8') as f:
-                for line_num, line in enumerate(f, 1):
-                    try:
-                        data = json.loads(line)
-                        
-                        # Convert InstructLab format to standard format
-                        if 'user' in data and 'assistant' in data:
-                            sample = {
-                                'instruction': data['user'],
-                                'output': data['assistant'],
-                                'metadata': {'source': 'instructlab_synthetic', 'model': 'llama3.1:8b'}
-                            }
-                        elif 'seed_question' in data and 'seed_response' in data:
-                            sample = {
-                                'instruction': data['seed_question'],
-                                'output': data['seed_response'],
-                                'metadata': {'source': 'instructlab_synthetic', 'task': data.get('task_description', '')}
-                            }
-                        else:
-                            # Already in standard format
-                            sample = data
-                            if 'metadata' not in sample:
-                                sample['metadata'] = {}
-                            sample['metadata']['source'] = 'instructlab_synthetic'
-                        
-                        # Validate
-                        is_valid, error = validate_schema(sample)
-                        if is_valid:
-                            samples.append(sample)
-                        else:
-                            invalid_count += 1
-                    
-                    except (json.JSONDecodeError, KeyError):
-                        invalid_count += 1
+    # 1. Look for preprocessed files (highest priority) -> Sort by folder name timestamp
+    preproc_files = list(data_path.glob("preprocessed_*/compositional_skills_qlorax.jsonl"))
+    for f in preproc_files:
+        candidate_files.append((f, f.parent.name)) 
+        
+    # 2. Look for test files if no preprocessed -> Sort by filename timestamp
+    if not candidate_files:
+        test_files = list(data_path.glob("test_*.jsonl"))
+        for f in test_files:
+            candidate_files.append((f, f.name))
+            
+    # 3. Fallback to any .jsonl -> Sort by file mtime
+    if not candidate_files:
+        other_files = [f for f in data_path.glob("*.jsonl") if not f.name.startswith("test_")]
+        for f in other_files:
+            candidate_files.append((f, str(f.stat().st_mtime)))
+            
+    if not candidate_files:
+        print("  No InstructLab data files found.")
+        return []
+        
+    # Sort descending (latest first) and pick top 1
+    candidate_files.sort(key=lambda x: x[1], reverse=True)
+    selected_file = candidate_files[0][0]
+    print(f"  Using latest dataset file: {selected_file}")
+    
+    # Process ONLY the selected file
+    with open(selected_file, 'r', encoding='utf-8') as f:
+        for line_num, line in enumerate(f, 1):
+            try:
+                data = json.loads(line)
+                
+                # Convert InstructLab format to standard format
+                if 'user' in data and 'assistant' in data:
+                    sample = {
+                        'instruction': data['user'],
+                        'output': data['assistant'],
+                        'metadata': {'source': 'instructlab_synthetic', 'model': 'llama-3-1-70b'}
+                    }
+                elif 'seed_question' in data and 'seed_response' in data:
+                    sample = {
+                        'instruction': data['seed_question'],
+                        'output': data['seed_response'],
+                        'metadata': {'source': 'instructlab_synthetic', 'task': data.get('task_description', '')}
+                    }
+                else:
+                    # Already in standard format
+                    sample = data
+                    if 'metadata' not in sample:
+                        sample['metadata'] = {}
+                    sample['metadata']['source'] = 'instructlab_synthetic'
+                
+                # Validate
+                is_valid, error = validate_schema(sample)
+                if is_valid:
+                    samples.append(sample)
+                else:
+                    invalid_count += 1
+            
+            except (json.JSONDecodeError, KeyError):
+                invalid_count += 1
     
     print(f"  Loaded {len(samples)} InstructLab samples ({invalid_count} invalid)")
     return samples
