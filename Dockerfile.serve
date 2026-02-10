@@ -33,10 +33,10 @@ COPY configs/ ./configs/
 COPY data/ ./data/
 
 # Copy trained models (will be mounted or copied during CI/CD)
-COPY models/ ./models/
+# COPY models/ ./models/ (Mounted at runtime)
 
 # Create necessary directories
-RUN mkdir -p /app/results /app/logs
+RUN mkdir -p /app/results /app/models /app/logs
 
 # Make scripts executable
 RUN chmod +x scripts/*.py
