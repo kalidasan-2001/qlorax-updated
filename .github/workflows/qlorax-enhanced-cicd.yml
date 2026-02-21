@@ -340,7 +340,7 @@ jobs:
   docker-build-test:
     name: Docker Build & Test
     runs-on: ubuntu-latest
-    needs: benchmark-validation
+    needs: code-quality
     timeout-minutes: 15
     
     steps:
