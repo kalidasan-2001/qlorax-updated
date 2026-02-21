@@ -1,37 +1,21 @@
-# í°³ QLORAX Training Container
-# Dockerfile for reproducible QLoRA fine-tuning environment
+# íº€ QLORAX Training Container (Optimized)
+# Uses PyTorch base image for fast CI/CD builds
 
-FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
+FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-devel
 
-# Prevent interactive prompts during installation
+# Prevent interactive prompts
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
-ENV CUDA_DEVICE_ORDER=PCI_BUS_ID
 
 # Install system dependencies
-# Added software-properties-common to manage repositories
+# (Python and CUDA are already strictly configured in the base image)
 RUN apt-get update && apt-get install -y \
-    software-properties-common \
-    && add-apt-repository ppa:deadsnakes/ppa \
-    && apt-get update && apt-get install -y \
-    python3.11 \
-    python3.11-dev \
-    python3.11-venv \
-    python3.11-distutils \
     git \
     curl \
     wget \
     build-essential \
     cmake \
     && rm -rf /var/lib/apt/lists/*
-
-# Install pip specifically for Python 3.11
-RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
-
-# Create symbolic links
-# Priority to 3.11
-RUN ln -sf /usr/bin/python3.11 /usr/bin/python
-RUN ln -sf /usr/local/bin/pip /usr/bin/pip
 
 # Set working directory
 WORKDIR /app
@@ -41,15 +25,11 @@ COPY requirements-instructlab.txt .
 COPY requirements.txt .
 
 # Install Python dependencies
-RUN pip install --no-cache-dir --upgrade pip
-RUN pip install --no-cache-dir -r requirements-instructlab.txt
-
-# Install additional training dependencies
-RUN pip install --no-cache-dir \
-    torch==2.1.0 \
-    torchvision==0.16.0 \
-    torchaudio==2.1.0 \
-    --index-url https://download.pytorch.org/whl/cu118
+# Note: We rely on the pre-installed PyTorch in the base image.
+# We install other requirements, upgrading pip first.
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements-instructlab.txt && \
+    pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY . .
