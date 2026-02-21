@@ -330,7 +330,7 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Quick Benchmark Check
-        continue-on-error: true
+        continue-on-error: false
         run: |
           echo "Checking benchmark components..."
           python -c "import json; print('JSON processing ready')"
@@ -372,25 +372,24 @@ jobs:
             echo "Docker Compose found"
             grep -E "(version|services)" docker-compose.yml || true
           fi
-          
       - name: Build Training Container
-        continue-on-error: true
         run: |
+          mkdir -p artifacts
           if [ -f "Dockerfile.training" ]; then
             docker build -f Dockerfile.training -t qlorax-training:latest . --no-cache
             echo "Training container built"
+            echo "Saving training container to artifact..."
+            docker save qlorax-training:latest | gzip > artifacts/qlorax-training.tar.gz
           fi
-          
+
       - name: Build Serving Container
-        continue-on-error: true
         run: |
           if [ -f "Dockerfile.serve" ]; then
             docker build -f Dockerfile.serve -t qlorax-serve:latest . --no-cache
             echo "Serving container built"
           fi
-          
-      - name: Tag Images
-        continue-on-error: true
+
+      - name: Check Images
         run: |
           COMMIT_HASH=$(git rev-parse --short HEAD)
           echo "Commit hash: $COMMIT_HASH"
@@ -405,6 +404,12 @@ jobs:
             echo "Serving image tagged"
           fi
 
+      - name: Upload Docker Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-images
+          path: artifacts/*.tar.gz
+          retention-days: 1
   # STAGE 8: Reproducibility Manifest
   reproducibility-manifest:
     name: MLOps Artifacts
@@ -492,7 +497,7 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Prepare Release
-        continue-on-error: true
+        continue-on-error: false
         run: |
           echo "Preparing release artifacts..."
           ls -la README*.md 2>/dev/null || echo "README files found"
