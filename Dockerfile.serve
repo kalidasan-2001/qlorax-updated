@@ -19,14 +19,11 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Copy requirements
-COPY requirements.txt .
-COPY requirements-instructlab.txt .
+COPY requirements-serve.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir gradio>=4.0.0 fastapi uvicorn
-
+RUN pip install --no-cache-dir -r requirements-serve.txt || (echo "=== PIP INSTALL FAILED ===" && pip --version && python --version && echo "=== requirements-serve.txt ===" && cat requirements-serve.txt && exit 1)
 # Copy application code
 COPY scripts/ ./scripts/
 COPY configs/ ./configs/
