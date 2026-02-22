@@ -376,7 +376,7 @@ jobs:
         run: |
           mkdir -p artifacts
           if [ -f "Dockerfile.training" ]; then
-            docker build -f Dockerfile.training -t qlorax-training:latest . --no-cache
+            docker buildx build -f Dockerfile.training -t qlorax-training:latest --load --cache-from type=gha,scope=training --cache-to type=gha,mode=max,scope=training .
             echo "Training container built"
             echo "Saving training container to artifact..."
             docker save qlorax-training:latest | gzip > artifacts/qlorax-training.tar.gz
@@ -385,7 +385,7 @@ jobs:
       - name: Build Serving Container
         run: |
           if [ -f "Dockerfile.serve" ]; then
-            docker build -f Dockerfile.serve -t qlorax-serve:latest . --no-cache
+            docker buildx build -f Dockerfile.serve -t qlorax-serve:latest --load --cache-from type=gha,scope=serve --cache-to type=gha,mode=max,scope=serve .
             echo "Serving container built"
           fi
 
