@@ -37,7 +37,7 @@ RUN pip install --no-cache-dir --upgrade pip
 # Fix for llama-cpp-python: Enable CUDA support and force rebuild with system compiler
 # We explicitly set CUDA architectures to avoid 'native' detection failing in CI (no GPU context)
 # Supporting Volta (7.0), Turing (7.5), Ampere (8.0, 8.6)
-ENV CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=70;75;80;86"
+ENV CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=75"
 ENV FORCE_CMAKE=1
 
 # Optimization: Pre-install llama-cpp-python
