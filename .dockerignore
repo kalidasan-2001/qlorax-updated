@@ -1,0 +1,42 @@
+# Version control
+.git
+.github
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+venv/
+.venv/
+env/
+
+# Data and Artifacts (large files)
+artifacts/
+data/
+downloads/
+checkpoints/
+models/
+outputs/
+runs/
+wandb/
+*.safetensors
+*.bin
+*.pt
+*.gguf
+*.pth
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log

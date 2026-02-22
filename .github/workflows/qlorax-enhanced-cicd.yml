@@ -15,6 +15,9 @@ jobs:
   code-quality:
     name: Code Quality
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     timeout-minutes: 10
     
     steps:
@@ -44,6 +47,9 @@ jobs:
   fast-tests:
     name: Quick Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: code-quality
     timeout-minutes: 8
     
@@ -83,6 +89,9 @@ jobs:
   dataset-generation:
     name: Dataset Pipeline
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: fast-tests
     timeout-minutes: 12
     
@@ -191,6 +200,9 @@ jobs:
   mini-training-test:
     name: Training Smoke Test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: dataset-generation
     timeout-minutes: 45
     
@@ -294,6 +306,9 @@ jobs:
   training-validation:
     name: Training Dependencies
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: mini-training-test
     timeout-minutes: 5
     
@@ -322,6 +337,9 @@ jobs:
   benchmark-validation:
     name: Benchmark Dependencies
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: training-validation
     timeout-minutes: 3
     
@@ -340,6 +358,9 @@ jobs:
   docker-build-test:
     name: Docker Build & Test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: code-quality
     timeout-minutes: 45
     
@@ -349,6 +370,12 @@ jobs:
         
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
         
       - name: Validate Docker Files
         run: |
@@ -372,20 +399,38 @@ jobs:
             echo "Docker Compose found"
             grep -E "(version|services)" docker-compose.yml || true
           fi
-      - name: Build Training Container
+      - name: Build Training Container (Artifact Export)
+        uses: docker/build-push-action@v5
+        if: hashFiles('Dockerfile.training') != ''
+        with:
+          context: .
+          file: Dockerfile.training
+          outputs: type=docker,dest=artifacts/qlorax-training.tar
+          cache-from: type=gha,scope=training
+          cache-to: type=gha,mode=max,scope=training
+          tags: ghcr.io/${{ github.repository_owner }}/qlorax-training:latest
+
+      - name: Compress Training Artifact
+        if: hashFiles('Dockerfile.training') != ''
         run: |
-          mkdir -p artifacts
-          if [ -f "Dockerfile.training" ]; then
-            docker buildx build -f Dockerfile.training -t qlorax-training:latest --load --cache-from type=gha,scope=training --cache-to type=gha,mode=max,scope=training .
-            echo "Training container built"
-            echo "Saving training container to artifact..."
-            docker save qlorax-training:latest | gzip > artifacts/qlorax-training.tar.gz
-          fi
+          echo "Compressing training artifact..."
+          gzip -1 artifacts/qlorax-training.tar
+          ls -lh artifacts/qlorax-training.tar.gz
+
+      - name: Push Training Container (Registry)
+        uses: docker/build-push-action@v5
+        if: hashFiles('Dockerfile.training') != ''
+        with:
+          context: .
+          file: Dockerfile.training
+          push: true
+          cache-from: type=gha,scope=training
+          tags: ghcr.io/${{ github.repository_owner }}/qlorax-training:latest
 
       - name: Build Serving Container
         run: |
           if [ -f "Dockerfile.serve" ]; then
-            docker buildx build -f Dockerfile.serve -t qlorax-serve:latest --load --cache-from type=gha,scope=serve --cache-to type=gha,mode=max,scope=serve .
+            docker buildx build -f Dockerfile.serve -t ghcr.io/${{ github.repository_owner }}/qlorax-serve:latest --push --cache-from type=gha,scope=serve --cache-to type=gha,mode=max,scope=serve .
             echo "Serving container built"
           fi
 
@@ -414,6 +459,9 @@ jobs:
   reproducibility-manifest:
     name: MLOps Artifacts
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: [dataset-generation, mini-training-test, docker-build-test]
     timeout-minutes: 5
     
@@ -489,6 +537,9 @@ jobs:
   release-prep:
     name: Release Prep
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: reproducibility-manifest
     timeout-minutes: 3
     
@@ -508,6 +559,9 @@ jobs:
   pipeline-success:
     name: Pipeline Success
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: release-prep
     timeout-minutes: 2
     
