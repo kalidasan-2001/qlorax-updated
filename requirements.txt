@@ -1,35 +1,44 @@
-# Simplified requirements with version ranges for better compatibility
+# QLORAX Master Requirements File
+# This file documents all dependencies but is NOT used directly in Docker builds.
+# Instead, use purpose-specific files:
+#   - requirements-train.txt: Training container (Docker)
+#   - requirements-serve.txt: Serving/API container  
+#   - requirements-dev.txt: Local development only
+#
+# IMPORTANT: torch/torchvision/torchaudio/triton are PROVIDED BY BASE IMAGE
+# Base image pytorch/pytorch:2.4.1-cuda12.1-cudnn9-devel includes:
+#   - torch 2.4.1+cu121
+#   - torchvision 0.19.1+cu121  
+#   - torchaudio 2.4.1+cu121
+#   - triton 3.0.0 (required for axolotl>=0.12.0)
 
 # Core ML Framework (compatible versions)
+# EXCLUDED FROM PIP INSTALL - provided by base image
 torch>=2.2.0,<2.6.0
 torchvision>=0.16.0
 torchaudio>=2.1.0
 
-# Transformers and Hugging Face ecosystem
+# Transformers and Hugging Face ecosystem [TRAIN]
 transformers>=4.35.0,<5.0.0
 tokenizers>=0.15.0
 accelerate>=0.24.0
 datasets>=2.14.0
 evaluate>=0.4.0
 
-# Fine-tuning and Parameter Efficient Training
+# Fine-tuning and Parameter Efficient Training [TRAIN]
 peft>=0.6.0
 bitsandbytes>=0.41.0
 scipy>=1.11.0
-
-# Axolotl - QLoRA fine-tuning framework (using compatible version)
 axolotl>=0.12.0,<0.13.0
-
-# Quantization support
 optimum>=1.16.0
 
-# API and Deployment
+# API and Deployment [SERVE]
 fastapi>=0.104.0
 uvicorn[standard]>=0.24.0
 gradio>=4.7.0
 pydantic>=2.5.0
 
-# Data processing and utilities
+# Data processing and utilities [TRAIN]
 numpy>=1.24.0,<2.0.0
 pandas>=2.1.0
 matplotlib>=3.8.0
@@ -38,27 +47,27 @@ pillow>=10.1.0
 requests>=2.31.0
 tqdm>=4.66.0
 
-# Configuration and logging
+# Configuration and logging [TRAIN]
 pyyaml>=6.0.0
 wandb>=0.16.0
 tensorboard>=2.15.0
 
-# Development and code quality
+# Development and code quality [DEV]
 ruff>=0.1.0
 black>=23.11.0
 pre-commit>=3.6.0
 pytest>=7.4.0
 
-# Jupyter and notebook support
+# Jupyter and notebook support [DEV]
 jupyter>=1.0.0
 jupyterlab>=4.0.0
 ipykernel>=6.27.0
 ipywidgets>=8.1.0
 
-# System utilities
+# System utilities [TRAIN]
 psutil>=5.9.0
 packaging>=23.2
 
-# Optional: Additional ML utilities
+# Optional: Additional ML utilities [TRAIN]
 scikit-learn>=1.3.0
 safetensors>=0.4.0

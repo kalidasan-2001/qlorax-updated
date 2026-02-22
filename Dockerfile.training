@@ -1,7 +1,8 @@
 #  QLORAX Training Container (Optimized)
 # Uses PyTorch base image for fast CI/CD builds
 
-FROM pytorch/pytorch:2.2.0-cuda12.1-cudnn8-devel
+# UPGRADED: 2.2.0 → 2.4.1 for triton 3.0.0 compatibility with axolotl>=0.12.0
+FROM pytorch/pytorch:2.4.1-cuda12.1-cudnn9-devel
 
 # Prevent interactive prompts
 ENV DEBIAN_FRONTEND=noninteractive
@@ -33,10 +34,19 @@ WORKDIR /app
 # Upgrade pip first
 RUN pip install --no-cache-dir --upgrade pip
 
+# VERIFICATION STEP 1: Check base image provides torch + triton
+RUN echo "========================================" && \
+    echo "Base Image Python Environment" && \
+    echo "========================================" && \
+    python -c "import sys; print(f'Python: {sys.version.split()[0]}')" && \
+    python -c "import torch; print(f'PyTorch: {torch.__version__}')" && \
+    python -c "try:\n    import triton\n    print(f'Triton: {triton.__version__}')\nexcept ImportError:\n    print('Triton: NOT INSTALLED')" && \
+    echo "========================================"
+
 # ENVIRONMENT VARIABLES FOR BUILD OPTIMIZATION
 # Fix for llama-cpp-python: Enable CUDA support and force rebuild with system compiler
 # We explicitly set CUDA architectures to avoid 'native' detection failing in CI (no GPU context)
-# Supporting Volta (7.0), Turing (7.5), Ampere (8.0, 8.6)
+# Targeting Tesla T4 (Compute Capability 7.5) for standard CI runners
 ENV CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=75"
 ENV FORCE_CMAKE=1
 
@@ -44,13 +54,25 @@ ENV FORCE_CMAKE=1
 # This runs BEFORE copying requirements files, so it's cached even if other requirements change.
 RUN pip install --no-cache-dir llama-cpp-python --verbose
 
-# Copy requirements files
-COPY requirements-instructlab.txt .
-COPY requirements.txt .
+# Copy ONLY training requirements
+COPY requirements-train.txt .
 
 # Install Python dependencies
-# Note: We rely on the pre-installed PyTorch in the base image.
-RUN pip install --no-cache-dir -r requirements-instructlab.txt -r requirements.txt
+# CRITICAL: requirements-train.txt excludes torch/torchvision/torchaudio/triton
+# These are provided by the base image and must NOT be reinstalled.
+RUN echo "========================================" && \
+    echo "Installing Training Dependencies" && \
+    echo "========================================" && \
+    pip install --no-cache-dir -r requirements-train.txt && \
+    echo "========================================" && \
+    echo "Dependency Verification" && \
+    echo "========================================" && \
+    pip check && \
+    python -c "import torch, triton; print(f'✓ PyTorch: {torch.__version__}'); print(f'✓ Triton: {triton.__version__}')" && \
+    python -c "import axolotl; print(f'✓ Axolotl: {axolotl.__version__}')" && \
+    echo "========================================" && \
+    echo "Build Complete" && \
+    echo "========================================"
 
 # Copy application code
 COPY . .

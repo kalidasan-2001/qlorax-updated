@@ -1,0 +1,20 @@
+# Serving/API Dependencies for QLORAX
+# Use for deployment containers with FastAPI/Gradio UI
+
+# API and Web Framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+gradio>=4.7.0
+pydantic>=2.5.0
+
+# HTTP and utilities
+httpx>=0.25.0
+requests>=2.31.0
+
+# Optional: Model serving (if not using vLLM separately)
+# vllm>=0.2.0
+
+# Visualization for demos
+matplotlib>=3.8.0
+seaborn>=0.13.0
+pillow>=10.1.0
