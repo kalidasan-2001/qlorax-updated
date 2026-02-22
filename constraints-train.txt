@@ -1,0 +1,11 @@
+# Constraints to prevent pip from upgrading base image packages
+# Base image: pytorch/pytorch:2.4.1-cuda12.1-cudnn9-devel provides:
+#   - torch==2.4.1+cu121
+#   - torchvision==0.19.1+cu121
+#   - torchaudio==2.4.1+cu121
+#   - triton==3.0.0
+
+torch==2.4.1
+torchvision==0.19.1
+torchaudio==2.4.1
+triton==3.0.0

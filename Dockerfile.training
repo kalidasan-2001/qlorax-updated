@@ -54,16 +54,16 @@ ENV FORCE_CMAKE=1
 # This runs BEFORE copying requirements files, so it's cached even if other requirements change.
 RUN pip install --no-cache-dir llama-cpp-python --verbose
 
-# Copy ONLY training requirements
-COPY requirements-train.txt .
+# Copy training requirements and constraints
+COPY requirements-train.txt constraints-train.txt ./
 
-# Install Python dependencies
-# CRITICAL: requirements-train.txt excludes torch/torchvision/torchaudio/triton
-# These are provided by the base image and must NOT be reinstalled.
+# Install Python dependencies with constraints to prevent torch upgrades
+# CRITICAL: constraints-train.txt pins torch/torchvision/torchaudio/triton to base image versions
+# This prevents pip from upgrading these packages which would break compatibility
 RUN echo "========================================" && \
     echo "Installing Training Dependencies" && \
     echo "========================================" && \
-    pip install --no-cache-dir -r requirements-train.txt && \
+    pip install --no-cache-dir -r requirements-train.txt -c constraints-train.txt && \
     echo "========================================" && \
     echo "Dependency Verification" && \
     echo "========================================" && \
