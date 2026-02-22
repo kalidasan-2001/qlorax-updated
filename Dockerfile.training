@@ -1,6 +1,9 @@
 #  QLORAX Training Container (Optimized)
 # Uses PyTorch base image for fast CI/CD builds
 
+# Build argument to optionally install llama-cpp-python (not needed for training)
+ARG INSTALL_LLAMA_CPP=false
+
 # UPGRADED: 2.2.0 → 2.4.1 for triton 3.0.0 compatibility with axolotl>=0.12.0
 FROM pytorch/pytorch:2.4.1-cuda12.1-cudnn9-devel
 
@@ -9,7 +12,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
 
 # Install system dependencies
-# Added 'ninja-build' for faster compilation of llama-cpp-python
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -20,11 +22,9 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Fix: Remove conda's compiler_compat which conflicts with system gcc/ld
-# This resolves the 'undefined reference to dlsym' linker error
 RUN rm -rf /opt/conda/compiler_compat
 
 # [CRITICAL FIX] Link against CUDA stubs to fix 'libcuda.so.1 not found' during build
-# This allows building GPU-dependent wheels (like llama-cpp-python) without a GPU present
 RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
 ENV LD_LIBRARY_PATH="/usr/local/cuda/lib64/stubs:${LD_LIBRARY_PATH}"
 
@@ -43,16 +43,21 @@ RUN echo "========================================" && \
     python -c "import sys; sys.path.insert(0, '/opt/conda/lib/python3.11/site-packages'); exec('''try:\n    import triton\n    print(\"Triton:\", triton.__version__)\nexcept ImportError:\n    print(\"Triton: NOT INSTALLED\")''')" && \
     echo "========================================"
 
-# ENVIRONMENT VARIABLES FOR BUILD OPTIMIZATION
-# Fix for llama-cpp-python: Enable CUDA support and force rebuild with system compiler
-# We explicitly set CUDA architectures to avoid 'native' detection failing in CI (no GPU context)
-# Targeting Tesla T4 (Compute Capability 7.5) for standard CI runners
-ENV CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=75"
-ENV FORCE_CMAKE=1
-
-# Optimization: Pre-install llama-cpp-python
-# This runs BEFORE copying requirements files, so it's cached even if other requirements change.
-RUN pip install --no-cache-dir llama-cpp-python --verbose
+# OPTIONAL: Pre-install llama-cpp-python (disabled by default for CI speed)
+# NOTE: llama-cpp-python is NOT required for Axolotl QLoRA training.
+#       It's only needed for GGUF inference, which is not part of the training workflow.
+#       Enable with: --build-arg INSTALL_LLAMA_CPP=true
+ARG INSTALL_LLAMA_CPP
+RUN if [ "$INSTALL_LLAMA_CPP" = "true" ]; then \
+        echo "========================================" && \
+        echo "Installing llama-cpp-python with CUDA..." && \
+        echo "========================================" && \
+        export CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=75" && \
+        export FORCE_CMAKE=1 && \
+        pip install --no-cache-dir llama-cpp-python --verbose; \
+    else \
+        echo "Skipping llama-cpp-python (not needed for training)"; \
+    fi
 
 # Copy training requirements and constraints
 COPY requirements-train.txt constraints-train.txt ./
