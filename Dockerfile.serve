@@ -30,7 +30,6 @@ RUN pip install --no-cache-dir gradio>=4.0.0 fastapi uvicorn
 # Copy application code
 COPY scripts/ ./scripts/
 COPY configs/ ./configs/
-COPY data/ ./data/
 
 # Copy trained models (will be mounted or copied during CI/CD)
 # COPY models/ ./models/ (Mounted at runtime)
