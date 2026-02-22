@@ -50,8 +50,7 @@ COPY requirements.txt .
 
 # Install Python dependencies
 # Note: We rely on the pre-installed PyTorch in the base image.
-RUN pip install --no-cache-dir -r requirements-instructlab.txt && \
-    pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements-instructlab.txt -r requirements.txt
 
 # Copy application code
 COPY . .
