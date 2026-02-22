@@ -67,16 +67,20 @@ COPY requirements-train.txt constraints-train.txt ./
 # This prevents pip from upgrading these packages which would break compatibility
 RUN echo "========================================" && \
     echo "Installing Training Dependencies" && \
-    echo "========================================" && \
-    pip install --no-cache-dir -r requirements-train.txt -c constraints-train.txt && \
-    echo "========================================" && \
+    echo "========================================"  
+
+RUN pip install --no-cache-dir -r requirements-train.txt -c constraints-train.txt
+
+RUN echo "========================================" && \
     echo "Dependency Verification" && \
-    echo "========================================" && \
-    pip check && \
-    python -c "import torch; print('✓ PyTorch:', torch.__version__)" && \
-    python -c "exec('''try:\n    import triton\n    print(\"✓ Triton:\", triton.__version__)\nexcept ImportError:\n    print(\"✓ Triton: NOT INSTALLED\")''')" && \
-    python -c "import axolotl; print('✓ Axolotl:', axolotl.__version__)" && \
-    echo "========================================" && \
+    echo "========================================"  
+
+RUN pip check
+RUN python -c "import torch; print('u2713 PyTorch:', torch.__version__)"
+RUN python -c "exec('''try:\n    import triton\n    print(\"\u2713 Triton:\", triton.__version__)\nexcept ImportError:\n    print(\"\u2713 Triton: NOT INSTALLED\")''')" 
+RUN python -c "import axolotl; print('u2713 Axolotl:', axolotl.__version__)"
+
+RUN echo "========================================" && \
     echo "Build Complete" && \
     echo "========================================"
 
