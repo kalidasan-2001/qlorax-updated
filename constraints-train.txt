@@ -1,9 +1,9 @@
 # Constraints for Training Container
-# Purpose: Pin torch ecosystem versions to match base image pytorch/pytorch:2.6.0-cuda12.1-cudnn9-devel
+# Purpose: Pin torch ecosystem versions to match base image pytorch/pytorch:2.6.0-cuda12.4-cudnn9-devel
 # This prevents pip from upgrading torch during requirements-train.txt installation
 # which would break compatibility with Axolotl 0.12.x
 
-# PyTorch ecosystem - matches pytorch/pytorch:2.6.0-cuda12.1-cudnn9-devel
+# PyTorch ecosystem - matches pytorch/pytorch:2.6.0-cuda12.4-cudnn9-devel
 torch==2.6.0
 torchvision==0.21.0
 torchaudio==2.6.0

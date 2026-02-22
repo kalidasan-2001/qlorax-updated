@@ -399,6 +399,14 @@ jobs:
             echo "Docker Compose found"
             grep -E "(version|services)" docker-compose.yml || true
           fi
+      
+      - name: Verify Base Image Exists
+        run: |
+          echo "Verifying PyTorch base image..."
+          BASE_IMAGE=$(grep "^FROM" Dockerfile.training | head -1 | awk '{print $2}')
+          echo "Base image: $BASE_IMAGE"
+          docker manifest inspect $BASE_IMAGE
+          echo "✓ Base image verified"
       - name: Build Training Container (Artifact Export)
         uses: docker/build-push-action@v5
         if: hashFiles('Dockerfile.training') != ''
