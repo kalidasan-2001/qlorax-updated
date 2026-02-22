@@ -399,6 +399,9 @@ jobs:
             echo "Docker Compose found"
             grep -E "(version|services)" docker-compose.yml || true
           fi
+      - name: Create Artifacts Directory
+        run: mkdir -p artifacts
+
       - name: Build Training Container (Artifact Export)
         uses: docker/build-push-action@v5
         if: hashFiles('Dockerfile.training') != ''
