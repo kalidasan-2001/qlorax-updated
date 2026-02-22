@@ -9,12 +9,14 @@ ENV PYTHONUNBUFFERED=1
 
 # Install system dependencies
 # (Python and CUDA are already strictly configured in the base image)
+# Added 'ninja-build' for faster compilation of llama-cpp-python
 RUN apt-get update && apt-get install -y \
     git \
     curl \
     wget \
     build-essential \
     cmake \
+    ninja-build \
     && rm -rf /var/lib/apt/lists/*
 
 # Fix: Remove conda's compiler_compat which conflicts with system gcc/ld
@@ -24,21 +26,29 @@ RUN rm -rf /opt/conda/compiler_compat
 # Set working directory
 WORKDIR /app
 
-# Copy requirements first for better caching
-COPY requirements-instructlab.txt .
-COPY requirements.txt .
+# Upgrade pip first (cache this layer)
+RUN pip install --no-cache-dir --upgrade pip
 
+# ENVIRONMENT VARIABLES FOR BUILD OPTIMIZATION
 # Fix for llama-cpp-python: Enable CUDA support and force rebuild with system compiler
-# We explicitly set CUDA architectures to avoid 'native' detection failing in CI (no GPU)
+# We explicitly set CUDA architectures to avoid 'native' detection failing in CI (no GPU context)
 # Supporting Volta (7.0), Turing (7.5), Ampere (8.0, 8.6)
+# Reducing this list significantly speeds up build. If targeting specific hardware, remove unused archs.
 ENV CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=70;75;80;86"
 ENV FORCE_CMAKE=1
 
+# Optimization: Pre-install llama-cpp-python
+# This runs BEFORE copying requirements files, so it's cached even if other requirements change.
+# If 'instructlab' requires a conflicting version, pip will rebuild it later, but caching the LATEST usually works.
+RUN pip install --no-cache-dir llama-cpp-python --verbose
+
+# Copy requirements files
+COPY requirements-instructlab.txt .
+COPY requirements.txt .
+
 # Install Python dependencies
 # Note: We rely on the pre-installed PyTorch in the base image.
-# We install other requirements, upgrading pip first.
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements-instructlab.txt && \
+RUN pip install --no-cache-dir -r requirements-instructlab.txt && \
     pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
