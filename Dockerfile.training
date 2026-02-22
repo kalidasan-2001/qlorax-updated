@@ -38,9 +38,19 @@ RUN pip install --no-cache-dir --upgrade pip
 RUN echo "========================================" && \
     echo "Base Image Python Environment" && \
     echo "========================================" && \
-    python -c "import sys; print(f'Python: {sys.version.split()[0]}')" && \
-    python -c "import torch; print(f'PyTorch: {torch.__version__}')" && \
-    python -c "try:\n    import triton\n    print(f'Triton: {triton.__version__}')\nexcept ImportError:\n    print('Triton: NOT INSTALLED')" && \
+    python - <<'PY' && \
+import sys
+print(f'Python: {sys.version.split()[0]}')
+
+import torch
+print(f'PyTorch: {torch.__version__}')
+
+try:
+    import triton
+    print(f'Triton: {triton.__version__}')
+except ImportError:
+    print('Triton: NOT INSTALLED')
+PY
     echo "========================================"
 
 # ENVIRONMENT VARIABLES FOR BUILD OPTIMIZATION
@@ -68,8 +78,19 @@ RUN echo "========================================" && \
     echo "Dependency Verification" && \
     echo "========================================" && \
     pip check && \
-    python -c "import torch, triton; print(f'✓ PyTorch: {torch.__version__}'); print(f'✓ Triton: {triton.__version__}')" && \
-    python -c "import axolotl; print(f'✓ Axolotl: {axolotl.__version__}')" && \
+    python - <<'PY' && \
+import torch
+print(f'✓ PyTorch: {torch.__version__}')
+
+try:
+    import triton
+    print(f'✓ Triton: {triton.__version__}')
+except ImportError:
+    print('✓ Triton: NOT INSTALLED')
+
+import axolotl
+print(f'✓ Axolotl: {axolotl.__version__}')
+PY
     echo "========================================" && \
     echo "Build Complete" && \
     echo "========================================"
