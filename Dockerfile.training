@@ -9,7 +9,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
 
 # Install system dependencies
-# Added 'ninja-build' for faster compilation of llama-cpp-python
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -24,7 +23,7 @@ RUN apt-get update && apt-get install -y \
 RUN rm -rf /opt/conda/compiler_compat
 
 # [CRITICAL FIX] Link against CUDA stubs to fix 'libcuda.so.1 not found' during build
-# This allows building GPU-dependent wheels (like llama-cpp-python) without a GPU present
+# This allows building GPU-dependent wheels without a GPU present
 RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
 ENV LD_LIBRARY_PATH="/usr/local/cuda/lib64/stubs:${LD_LIBRARY_PATH}"
 
@@ -42,17 +41,6 @@ RUN echo "========================================" && \
     python -c "import torch; print('PyTorch:', torch.__version__)" && \
     python -c "import sys; sys.path.insert(0, '/opt/conda/lib/python3.11/site-packages'); exec('''try:\n    import triton\n    print(\"Triton:\", triton.__version__)\nexcept ImportError:\n    print(\"Triton: NOT INSTALLED\")''')" && \
     echo "========================================"
-
-# ENVIRONMENT VARIABLES FOR BUILD OPTIMIZATION
-# Fix for llama-cpp-python: Enable CUDA support and force rebuild with system compiler
-# We explicitly set CUDA architectures to avoid 'native' detection failing in CI (no GPU context)
-# Targeting Tesla T4 (Compute Capability 7.5) for standard CI runners
-ENV CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=75"
-ENV FORCE_CMAKE=1
-
-# Optimization: Pre-install llama-cpp-python
-# This runs BEFORE copying requirements files, so it's cached even if other requirements change.
-RUN pip install --no-cache-dir llama-cpp-python --verbose
 
 # Copy ONLY training requirements
 COPY requirements-train.txt .
