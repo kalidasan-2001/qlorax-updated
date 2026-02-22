@@ -441,7 +441,6 @@ jobs:
             echo "Serving image tagged"
           fi
 
-      - name: Upload Docker Artifacts
   reproducibility-manifest:
     name: MLOps Artifacts
     runs-on: ubuntu-latest
