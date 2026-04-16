@@ -1,0 +1,10 @@
+{"id":"p01","prompt":"What is QLoRA and why is it useful for fine-tuning large language models?"}
+{"id":"p02","prompt":"Explain the role of LoRA rank in parameter-efficient fine-tuning."}
+{"id":"p03","prompt":"What does setting a fixed random seed do in machine learning experiments?"}
+{"id":"p04","prompt":"Why can deterministic settings still produce differences across hardware?"}
+{"id":"p05","prompt":"Describe the difference between training loss and evaluation loss."}
+{"id":"p06","prompt":"What is the purpose of a validation split in a fine-tuning pipeline?"}
+{"id":"p07","prompt":"How does 4-bit quantization help QLoRA training efficiency?"}
+{"id":"p08","prompt":"What are the risks of using do_sample=true during reproducibility testing?"}
+{"id":"p09","prompt":"Give a short checklist for reproducible LLM fine-tuning experiments."}
+{"id":"p10","prompt":"Why should checksum comparison be included in a reproducibility workflow?"}
