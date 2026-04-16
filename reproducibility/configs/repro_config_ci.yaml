@@ -1,0 +1,29 @@
+experiment:
+  seed: 42
+
+data:
+  train_file: data/splits/hybrid_70_30/train.jsonl
+  prompts_file: reproducibility/configs/fixed_prompts.jsonl
+
+training:
+  device: cpu
+  output_root: reproducibility/outputs
+  batch_size: 1
+  gradient_accumulation_steps: 1
+  warmup_steps: 0
+  logging_steps: 1
+  save_steps: 10
+  save_total_limit: 1
+  lora_r: 4
+  lora_alpha: 16
+  lora_dropout: 0.0
+  target_modules:
+    - c_attn
+    - c_proj
+
+determinism:
+  use_deterministic_algorithms: true
+  num_threads: 1
+
+model:
+  repro_model: sshleifer/tiny-gpt2
