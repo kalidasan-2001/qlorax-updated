@@ -1,0 +1,8 @@
+{
+  "baseline_id": "blessed_baseline_v1",
+  "metric_name": "rouge_l",
+  "metric_value": 0.384094228457882,
+  "sample_count": 10,
+  "evaluation_mode": "cpu_deterministic",
+  "notes": "Baseline metric from scripts/final_evaluate.py on rq4_evaluation/data/frozen_eval_subset.jsonl (10 samples), timestamp 2026-04-19T22:17:42.330968."
+}

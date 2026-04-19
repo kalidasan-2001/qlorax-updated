@@ -1,0 +1,40 @@
+# -----------------------------------------------------------------------------
+# Experiment metadata (thesis-controlled RQ4 gate run)
+# -----------------------------------------------------------------------------
+experiment:
+  name: rq4_controlled_gate_ci
+  research_question: RQ4
+  description: Detect and block degraded LoRA candidate releases vs blessed baseline.
+
+# -----------------------------------------------------------------------------
+# Evaluator entrypoint references (isolated module scripts)
+# -----------------------------------------------------------------------------
+evaluator:
+  entrypoint: rq4_evaluation/scripts/run_rq4_gate.py
+  compare_entrypoint: rq4_evaluation/scripts/compare_rq4_results.py
+  report_entrypoint: rq4_evaluation/scripts/build_rq4_report.py
+
+# -----------------------------------------------------------------------------
+# Core paths (candidate inputs, frozen data, and output locations)
+# -----------------------------------------------------------------------------
+paths:
+  candidate_artifacts:
+    release_manifest: rq4_evaluation/outputs/candidate_release_manifest.json
+    metrics: rq4_evaluation/outputs/candidate_metrics.json
+    outputs: rq4_evaluation/outputs/candidate_outputs.jsonl
+  frozen_eval_data:
+    eval_subset: rq4_evaluation/data/frozen_eval_subset.jsonl
+    prompts: rq4_evaluation/data/frozen_prompts.jsonl
+    dataset_manifest: rq4_evaluation/data/dataset_manifest.json
+  baseline_config: rq4_evaluation/configs/rq4_baseline.yaml
+  thresholds_config: rq4_evaluation/configs/rq4_thresholds.yaml
+  outputs_dir: rq4_evaluation/outputs
+  manifests_dir: rq4_evaluation/manifests
+
+# -----------------------------------------------------------------------------
+# Deterministic CPU-only execution settings
+# -----------------------------------------------------------------------------
+deterministic:
+  device: cpu
+  enabled: true
+  seed: 42

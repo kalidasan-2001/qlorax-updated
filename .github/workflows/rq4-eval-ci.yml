@@ -1,0 +1,111 @@
+name: RQ4 Evaluation CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_case:
+        description: Candidate model to evaluate
+        required: true
+        type: choice
+        default: pass
+        options:
+          - pass
+          - degraded
+  push:
+    paths:
+      - "rq4_evaluation/**"
+      - ".github/workflows/rq4-eval-ci.yml"
+  pull_request:
+    paths:
+      - "rq4_evaluation/**"
+      - ".github/workflows/rq4-eval-ci.yml"
+
+jobs:
+  rq4-eval-gate:
+    name: Run isolated RQ4 gate
+    runs-on: ubuntu-latest
+
+    env:
+      PASS_CANDIDATE_MODEL: models/thesis-final/thesis-final-explicit-split-v1/checkpoints
+      DEGRADED_CANDIDATE_MODEL: models/production-model/enhanced-qlora-20260225_013900/checkpoint-16
+      RQ4_CONFIG: rq4_evaluation/configs/rq4_gate_ci.yaml
+      RQ4_FINAL_EVALUATE: scripts/final_evaluate.py
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install minimal dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # Dependencies required by rq4 gate + scripts/final_evaluate.py
+          python -m pip install             pyyaml             numpy             nltk             rouge-score             scikit-learn             transformers             peft             sentence-transformers
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Select candidate model
+        shell: bash
+        run: |
+          set -euo pipefail
+          selected_case="pass"
+          selected_model="$PASS_CANDIDATE_MODEL"
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.candidate_case }}" == "degraded" ]]; then
+            selected_case="degraded"
+            selected_model="$DEGRADED_CANDIDATE_MODEL"
+          fi
+          echo "RQ4_CANDIDATE_MODEL=${selected_model}" >> "$GITHUB_ENV"
+          echo "RQ4_CANDIDATE_CASE=${selected_case}" >> "$GITHUB_ENV"
+          echo "Selected candidate case: ${selected_case}"
+          echo "Selected candidate model: ${selected_model}"
+
+      - name: Preflight checks (strict)
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f "$RQ4_FINAL_EVALUATE"
+          test -d rq4_evaluation
+          test -f "$RQ4_CONFIG"
+          test -f rq4_evaluation/scripts/run_rq4_gate.py
+          test -f rq4_evaluation/scripts/compare_rq4_results.py
+          test -f rq4_evaluation/scripts/rq4_utils.py
+          test -f rq4_evaluation/configs/rq4_baseline.yaml
+          test -f rq4_evaluation/configs/rq4_thresholds.yaml
+          test -f rq4_evaluation/data/frozen_eval_subset.jsonl
+          test -f rq4_evaluation/data/dataset_manifest.json
+          test -f rq4_evaluation/baselines/reference_metrics.json
+          test -f rq4_evaluation/baselines/reference_outputs.jsonl
+          test -f rq4_evaluation/baselines/reference_release_manifest.json
+          test -d "$RQ4_CANDIDATE_MODEL"
+          test -f "$RQ4_CANDIDATE_MODEL/adapter_config.json"
+          test -f "$RQ4_CANDIDATE_MODEL/adapter_model.safetensors"
+          test -f "$RQ4_CANDIDATE_MODEL/tokenizer.json"
+          # Fail fast if adapter file is still a Git LFS pointer blob.
+          ! grep -q "version https://git-lfs.github.com/spec" "$RQ4_CANDIDATE_MODEL/adapter_model.safetensors"
+
+      - name: Run real RQ4 gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python rq4_evaluation/scripts/run_rq4_gate.py --config "$RQ4_CONFIG" --candidate-model "$RQ4_CANDIDATE_MODEL"
+
+      - name: Upload RQ4 outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rq4-evaluation-outputs
+          path: rq4_evaluation/outputs
+          if-no-files-found: warn
+
+      - name: Upload RQ4 manifests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rq4-evaluation-manifests
+          path: rq4_evaluation/manifests
+          if-no-files-found: warn

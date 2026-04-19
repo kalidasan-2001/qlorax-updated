@@ -1,0 +1,12 @@
+{
+  "dataset_name": "rq4_frozen_eval_subset_v1",
+  "source_dataset": "data/splits/hybrid_70_30/eval.jsonl",
+  "sample_count": 10,
+  "fields": [
+    "instruction",
+    "output"
+  ],
+  "selection_rule": "first_10_nonempty_records_deterministic_order",
+  "shuffle": false,
+  "seed": 42
+}

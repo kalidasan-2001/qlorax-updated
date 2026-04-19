@@ -1,0 +1,15 @@
+{
+  "baseline_id": "blessed_baseline_v1",
+  "candidate_type": "lora_adapter",
+  "dataset": {
+    "eval_subset": "rq4_evaluation/data/frozen_eval_subset.jsonl",
+    "dataset_manifest": "rq4_evaluation/data/dataset_manifest.json",
+    "sample_count": 10,
+    "seed": 42
+  },
+  "artifacts": {
+    "metrics": "rq4_evaluation/baselines/reference_metrics.json",
+    "outputs": "rq4_evaluation/baselines/reference_outputs.jsonl"
+  },
+  "device": "cpu"
+}

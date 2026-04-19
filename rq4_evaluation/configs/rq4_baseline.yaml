@@ -1,0 +1,10 @@
+baseline:
+  release_id: blessed_baseline_v1
+  role: fixed_accepted_reference
+paths:
+  release_manifest: rq4_evaluation/baselines/reference_release_manifest.json
+  metrics: rq4_evaluation/baselines/reference_metrics.json
+  outputs: rq4_evaluation/baselines/reference_outputs.jsonl
+comparison:
+  primary_metric: rouge_l
+  expected_sample_count: 10
