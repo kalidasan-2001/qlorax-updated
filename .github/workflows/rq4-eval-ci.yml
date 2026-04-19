@@ -49,6 +49,16 @@ jobs:
           python -m pip install             pyyaml             numpy             nltk             rouge-score             scikit-learn             transformers             peft             sentence-transformers
           python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
 
+      - name: Pre-download exact NLTK tokenizer data
+        run: |
+          python - <<'PY'
+          import nltk
+          for resource in ("punkt", "punkt_tab"):
+              nltk.download(resource, quiet=True)
+              nltk.data.find(f"tokenizers/{resource}")
+          print("NLTK tokenizers ready: punkt, punkt_tab")
+          PY
+
       - name: Select candidate model
         shell: bash
         run: |

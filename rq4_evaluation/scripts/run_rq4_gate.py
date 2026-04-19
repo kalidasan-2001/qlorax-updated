@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import importlib
 import inspect
+import shlex
 import subprocess
 import sys
 import traceback
@@ -53,13 +54,15 @@ EXIT_DEGRADED = 2
 EXIT_RUNTIME_ERROR = 10
 
 
-def _truncate(text: str | None, max_chars: int = 1200) -> str:
+def _truncate(text: str | None, max_chars: int = 1200, from_end: bool = False) -> str:
     """Return a trimmed summary string for logs/manifests."""
     if not text:
         return ""
     cleaned = text.strip()
     if len(cleaned) <= max_chars:
         return cleaned
+    if from_end:
+        return f"... [truncated] {cleaned[-max_chars:]}"
     return f"{cleaned[:max_chars]}... [truncated]"
 
 
@@ -252,8 +255,11 @@ def execute_evaluation(
 
     method_used = "subprocess"
     return_code: int | None = None
+    command_str: str | None = None
     stdout_summary = ""
     stderr_summary = ""
+    stdout_tail = ""
+    stderr_tail = ""
     error_message: str | None = None
 
     try:
@@ -280,8 +286,11 @@ def execute_evaluation(
             ]
             completed = subprocess.run(cmd, capture_output=True, text=True, check=False)
             return_code = completed.returncode
-            stdout_summary = _truncate(completed.stdout)
-            stderr_summary = _truncate(completed.stderr)
+            stdout_summary = _truncate(completed.stdout, max_chars=2000)
+            stderr_summary = _truncate(completed.stderr, max_chars=2000)
+            stdout_tail = _truncate(completed.stdout, max_chars=4000, from_end=True)
+            stderr_tail = _truncate(completed.stderr, max_chars=4000, from_end=True)
+            command_str = " ".join(shlex.quote(part) for part in cmd)
 
             if completed.returncode != 0:
                 return {
@@ -289,10 +298,17 @@ def execute_evaluation(
                     "method_used": "subprocess",
                     "metrics_path": str(candidate_metrics_path),
                     "outputs_path": str(candidate_outputs_path),
+                    "raw_output_dir": str(raw_output_dir),
+                    "subprocess_command": command_str,
                     "return_code": completed.returncode,
-                    "error_message": "Evaluator subprocess exited with non-zero status.",
+                    "error_message": (
+                        "Evaluator subprocess exited with non-zero status "
+                        f"(return_code={completed.returncode})."
+                    ),
                     "stdout_summary": stdout_summary,
                     "stderr_summary": stderr_summary,
+                    "stdout_tail": stdout_tail,
+                    "stderr_tail": stderr_tail,
                 }
 
         detailed_results_path = raw_output_dir / "detailed_results.json"
@@ -303,10 +319,14 @@ def execute_evaluation(
                 "method_used": method_used,
                 "metrics_path": str(candidate_metrics_path),
                 "outputs_path": str(candidate_outputs_path),
+                "raw_output_dir": str(raw_output_dir),
+                "subprocess_command": command_str if method_used == "subprocess" else None,
                 "return_code": return_code,
                 "error_message": "Expected evaluator output files were not produced.",
                 "stdout_summary": stdout_summary,
                 "stderr_summary": stderr_summary,
+                "stdout_tail": stdout_tail,
+                "stderr_tail": stderr_tail,
             }
 
         detailed = load_json(detailed_results_path)
@@ -329,10 +349,14 @@ def execute_evaluation(
                 "method_used": method_used,
                 "metrics_path": str(candidate_metrics_path),
                 "outputs_path": str(candidate_outputs_path),
+                "raw_output_dir": str(raw_output_dir),
+                "subprocess_command": command_str if method_used == "subprocess" else None,
                 "return_code": return_code,
                 "error_message": f"Could not extract numeric metric '{metric_name}' from evaluator outputs.",
                 "stdout_summary": stdout_summary,
                 "stderr_summary": stderr_summary,
+                "stdout_tail": stdout_tail,
+                "stderr_tail": stderr_tail,
             }
 
         metrics_payload = {
@@ -353,10 +377,14 @@ def execute_evaluation(
                 "method_used": method_used,
                 "metrics_path": str(candidate_metrics_path),
                 "outputs_path": str(candidate_outputs_path),
+                "raw_output_dir": str(raw_output_dir),
+                "subprocess_command": command_str if method_used == "subprocess" else None,
                 "return_code": return_code,
                 "error_message": "Predictions payload is not a list; cannot normalize outputs.",
                 "stdout_summary": stdout_summary,
                 "stderr_summary": stderr_summary,
+                "stdout_tail": stdout_tail,
+                "stderr_tail": stderr_tail,
             }
 
         for idx, item in enumerate(predictions):
@@ -380,10 +408,14 @@ def execute_evaluation(
             "method_used": method_used,
             "metrics_path": str(candidate_metrics_path),
             "outputs_path": str(candidate_outputs_path),
+            "raw_output_dir": str(raw_output_dir),
+            "subprocess_command": command_str if method_used == "subprocess" else None,
             "return_code": return_code,
             "error_message": error_message,
             "stdout_summary": stdout_summary,
             "stderr_summary": stderr_summary,
+            "stdout_tail": stdout_tail,
+            "stderr_tail": stderr_tail,
         }
 
     except Exception as exc:  # noqa: BLE001
@@ -392,10 +424,14 @@ def execute_evaluation(
             "method_used": method_used,
             "metrics_path": str(candidate_metrics_path),
             "outputs_path": str(candidate_outputs_path),
+            "raw_output_dir": str(raw_output_dir),
+            "subprocess_command": command_str if method_used == "subprocess" else None,
             "return_code": return_code,
             "error_message": f"{type(exc).__name__}: {exc}",
             "stdout_summary": stdout_summary,
-            "stderr_summary": _truncate(traceback.format_exc()),
+            "stderr_summary": _truncate(traceback.format_exc(), max_chars=2000),
+            "stdout_tail": stdout_tail,
+            "stderr_tail": _truncate(traceback.format_exc(), max_chars=4000, from_end=True),
         }
 
 
