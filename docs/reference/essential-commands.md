@@ -34,16 +34,16 @@ type data\instructlab_generated\synthetic_data_*.jsonl | findstr /C:"instruction
 ### 3. 🤖 Model Training
 ```bash
 # Run enhanced training pipeline (RECOMMENDED)
-python run_enhanced_training.py --samples 15 --domain "machine_learning"
+python scripts/run_enhanced_training.py --samples 15 --domain "machine_learning"
 
 # Advanced training with more samples
-python run_enhanced_training.py --samples 25 --domain "artificial_intelligence"
+python scripts/run_enhanced_training.py --samples 25 --domain "artificial_intelligence"
 
 # Custom domain training
-python run_enhanced_training.py --samples 20 --domain "your_custom_domain"
+python scripts/run_enhanced_training.py --samples 20 --domain "your_custom_domain"
 
 # Original enhanced training (if needed)
-chcp 65001; python quick_start.py --mode enhanced --synthetic-samples 10 --domain "machine_learning"
+chcp 65001; python scripts/quick_start.py --mode enhanced --synthetic-samples 10 --domain "machine_learning"
 ```
 
 ### 4. 📈 Model Evaluation & Benchmarking
@@ -95,7 +95,7 @@ dir models\enhanced-qlora-demo\
 python scripts/instructlab_integration.py --samples 10 --domain "AI"
 
 # 2. Run enhanced training
-python run_enhanced_training.py --samples 10 --domain "AI"
+python scripts/run_enhanced_training.py --samples 10 --domain "AI"
 
 # 3. Benchmark the model
 python scripts/enhanced_benchmark.py --model models/enhanced-qlora-demo --test-data data/training_data.jsonl --output results/
@@ -113,7 +113,7 @@ python test_integration.py
 python scripts/instructlab_integration.py --samples 25 --domain "deep_learning"
 
 # 3. Train enhanced model
-python run_enhanced_training.py --samples 25 --domain "deep_learning"
+python scripts/run_enhanced_training.py --samples 25 --domain "deep_learning"
 
 # 4. Comprehensive evaluation
 python scripts/enhanced_benchmark.py --model models/enhanced-qlora-demo --test-data data/training_data.jsonl --output results/research/
@@ -152,7 +152,7 @@ python -c "import torch; print(f'PyTorch: {torch.__version__}')"
 python -c "import transformers; print(f'Transformers: {transformers.__version__}')"
 
 # Verbose training for debugging
-python run_enhanced_training.py --samples 5 --domain "test" --verbose
+python scripts/run_enhanced_training.py --samples 5 --domain "test" --verbose
 
 # Check system resources
 python -c "import psutil; print(f'RAM: {psutil.virtual_memory().percent}%')"
@@ -166,7 +166,7 @@ python -c "import psutil; print(f'RAM: {psutil.virtual_memory().percent}%')"
 python scripts/instructlab_integration.py --samples 50 --domain "production_domain"
 
 # 2. Train production model
-python run_enhanced_training.py --samples 50 --domain "production_domain"
+python scripts/run_enhanced_training.py --samples 50 --domain "production_domain"
 
 # 3. Comprehensive evaluation
 python scripts/enhanced_benchmark.py --model models/enhanced-qlora-demo --test-data data/training_data.jsonl --output results/production/
@@ -192,12 +192,12 @@ curl http://localhost:8000/health
 ### 🎛️ Custom Training Configurations
 ```bash
 # Custom domain training
-python run_enhanced_training.py --samples 30 --domain "healthcare"
-python run_enhanced_training.py --samples 20 --domain "finance"
-python run_enhanced_training.py --samples 25 --domain "education"
+python scripts/run_enhanced_training.py --samples 30 --domain "healthcare"
+python scripts/run_enhanced_training.py --samples 20 --domain "finance"
+python scripts/run_enhanced_training.py --samples 25 --domain "education"
 
 # Batch processing
-for domain in ("AI" "ML" "DL" "NLP"); do python run_enhanced_training.py --samples 15 --domain $domain; done
+for domain in ("AI" "ML" "DL" "NLP"); do python scripts/run_enhanced_training.py --samples 15 --domain $domain; done
 ```
 
 ### 📈 Advanced Evaluation
@@ -220,7 +220,7 @@ python test_integration.py
 python scripts/instructlab_integration.py --samples 15 --domain "daily_tasks"
 
 # Quick training update
-python run_enhanced_training.py --samples 15 --domain "daily_tasks"
+python scripts/run_enhanced_training.py --samples 15 --domain "daily_tasks"
 ```
 
 ### 🌙 Evening Routine
@@ -239,7 +239,7 @@ type training_summary.json
 
 ## 🎯 **Most Important Commands (Top 5)**
 
-1. **Full Training Pipeline**: `python run_enhanced_training.py --samples 15 --domain "machine_learning"`
+1. **Full Training Pipeline**: `python scripts/run_enhanced_training.py --samples 15 --domain "machine_learning"`
 2. **Synthetic Data Generation**: `python scripts/instructlab_integration.py --samples 20 --domain "AI"`
 3. **Model Evaluation**: `python scripts/enhanced_benchmark.py --model models/enhanced-qlora-demo --test-data data/training_data.jsonl --output results/`
 4. **API Deployment**: `python scripts/api_server.py`

@@ -12,7 +12,7 @@ This comprehensive guide walks you through every stage of the QLORAX enhanced ap
 
 **Primary Command:**
 ```powershell
-python run_enhanced_training.py
+python scripts/run_enhanced_training.py
 ```
 
 **Direct Data Generation Command:**
@@ -55,7 +55,7 @@ python -c "from scripts.instructlab_integration import QLORAXInstructLab; ql=QLO
 
 **Command:**
 ```powershell
-python run_enhanced_training.py
+python scripts/run_enhanced_training.py
 ```
 
 **Training Pipeline Breakdown:**
@@ -349,7 +349,7 @@ python scripts/train_production.py --config configs/production-config.yaml
 
 **Health Check Command:**
 ```powershell
-python validate_system.py --monitoring
+python scripts/validate_system.py --monitoring
 ```
 
 **Monitoring Dashboard:**

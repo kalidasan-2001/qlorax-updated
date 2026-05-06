@@ -31,7 +31,7 @@ chcp 65001; python scripts/instructlab_integration.py --samples 20 --domain "art
 
 ### **3. ✅ Enhanced Training Pipeline**
 ```bash
-python run_enhanced_training.py --samples 20 --domain "artificial_intelligence"
+python scripts/run_enhanced_training.py --samples 20 --domain "artificial_intelligence"
 ```
 **Result:** ✅ **TRAINING COMPLETED SUCCESSFULLY**
 - Training Status: **COMPLETED**
@@ -124,7 +124,7 @@ python scripts/gradio_app.py
 python scripts/instructlab_integration.py --samples 30 --domain "your_domain"
 
 # Re-train with new data
-python run_enhanced_training.py --samples 25 --domain "new_domain"
+python scripts/run_enhanced_training.py --samples 25 --domain "new_domain"
 
 # Run performance benchmarks
 python scripts/enhanced_benchmark.py --model models/enhanced-qlora-demo --test-data data/training_data.jsonl --output results/

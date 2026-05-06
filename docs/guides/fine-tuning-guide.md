@@ -29,7 +29,7 @@ train.bat
 
 #### Option C: Axolotl CLI (Advanced)
 ```bash
-./venv/Scripts/python.exe launch_training.py
+./venv/Scripts/python.exe scripts/launch_training.py
 ```
 
 ### Step 3: Monitor Training Progress

@@ -44,7 +44,7 @@ source venv/Scripts/activate  # Windows
 source venv/bin/activate      # Linux/Mac
 
 # Install additional dependencies
-python setup_dependencies.py
+python scripts/setup_dependencies.py
 
 # Validate setup
 python scripts/validate_setup.py
@@ -53,7 +53,7 @@ python scripts/validate_setup.py
 ### 2. Complete Pipeline (Recommended)
 ```bash
 # Run full training + benchmarking pipeline
-python quick_start.py
+python scripts/quick_start.py
 ```
 This will:
 - ✅ Validate your environment
@@ -282,4 +282,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Ready to fine-tune?** Start with `python quick_start.py` and follow the interactive guide! 🚀
+**Ready to fine-tune?** Start with `python scripts/quick_start.py` and follow the interactive guide! 🚀

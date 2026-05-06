@@ -48,10 +48,10 @@ Integration Test Summary:
 ### 1. Enhanced Quick Start
 ```bash
 # Run enhanced pipeline with InstructLab integration
-python quick_start.py --mode enhanced --synthetic-samples 5
+python scripts/quick_start.py --mode enhanced --synthetic-samples 5
 
 # Demo mode for testing
-python quick_start.py --demo --synthetic-samples 3
+python scripts/quick_start.py --demo --synthetic-samples 3
 ```
 
 ### 2. Synthetic Data Generation
@@ -103,7 +103,7 @@ pip install instructlab>=0.19.0
 python test_integration.py
 
 # Quick demo
-python quick_start.py --demo --synthetic-samples 3
+python scripts/quick_start.py --demo --synthetic-samples 3
 ```
 
 ### Generate Synthetic Data

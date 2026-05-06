@@ -72,10 +72,10 @@ model.safetensors: 4%|▋ | 94.4M/2.20G [00:40<1:25:45, 409kB/s]
 
 ```bash
 # Check current training status
-python validate_system.py
+python scripts/validate_system.py
 
 # Run complete pipeline (when ready)
-python quick_start.py
+python scripts/quick_start.py
 
 # Manual training only
 python scripts/train_production.py --config configs/production-config.yaml

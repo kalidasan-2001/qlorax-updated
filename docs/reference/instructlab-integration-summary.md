@@ -55,13 +55,13 @@
 #### Quick Start Enhanced Mode
 ```bash
 # Enhanced training with synthetic data
-python quick_start.py --mode enhanced --synthetic-samples 100
+python scripts/quick_start.py --mode enhanced --synthetic-samples 100
 
 # Domain-specific enhancement
-python quick_start.py --mode enhanced --domain machine_learning --synthetic-samples 200
+python scripts/quick_start.py --mode enhanced --domain machine_learning --synthetic-samples 200
 
 # Demo mode
-python quick_start.py --demo
+python scripts/quick_start.py --demo
 ```
 
 #### Manual Enhanced Training
@@ -100,8 +100,8 @@ The integration has been tested and verified:
 ### 🚀 Next Steps for Users
 
 1. **Install Dependencies**: `pip install -r requirements-instructlab.txt`
-2. **Run Demo**: `python quick_start.py --demo`
-3. **Try Enhanced Training**: `python quick_start.py --mode enhanced`
+2. **Run Demo**: `python scripts/quick_start.py --demo`
+3. **Try Enhanced Training**: `python scripts/quick_start.py --mode enhanced`
 4. **Customize Configuration**: Edit `configs/instructlab-config.yaml`
 5. **Read Documentation**: Review `INSTRUCTLAB_INTEGRATION_GUIDE.md`
 

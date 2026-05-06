@@ -79,7 +79,7 @@ python scripts/instructlab_integration.py --samples 20 --domain "your_domain"
 ### Advanced Usage
 ```bash
 # Run full enhanced training
-python run_enhanced_training.py --samples 25 --domain "artificial_intelligence"
+python scripts/run_enhanced_training.py --samples 25 --domain "artificial_intelligence"
 
 # Integration testing
 python test_integration.py

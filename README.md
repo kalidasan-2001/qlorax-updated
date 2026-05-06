@@ -36,16 +36,16 @@ pip install -r requirements-instructlab.txt  # Optional InstructLab features
 
 ### **2. Validate System**
 ```bash
-python validate_system.py
+python scripts/validate_system.py
 ```
 
 ### **3. Run Training**
 ```bash
 # Quick training
-python quick_start.py
+python scripts/quick_start.py
 
 # Enhanced with InstructLab
-python quick_start.py --mode enhanced --synthetic-samples 100
+python scripts/quick_start.py --mode enhanced --synthetic-samples 100
 
 # Production training
 python scripts/enhanced_training.py --config configs/production-config.yaml
@@ -54,7 +54,7 @@ python scripts/enhanced_training.py --config configs/production-config.yaml
 ### **4. Launch Interfaces**
 ```bash
 # Web interface
-python web_demo.py
+python scripts/web_demo.py
 # Access: http://localhost:7860
 
 # API server
@@ -237,16 +237,16 @@ evaluation:
 ### **Basic Training**
 ```python
 # Simple training run
-python quick_start.py
+python scripts/quick_start.py
 
 # With custom configuration
-python quick_start.py --config configs/my-config.yaml
+python scripts/quick_start.py --config configs/my-config.yaml
 ```
 
 ### **Enhanced Training with InstructLab**
 ```python
 # Enhanced mode with synthetic data
-python quick_start.py --mode enhanced --synthetic-samples 200
+python scripts/quick_start.py --mode enhanced --synthetic-samples 200
 
 # Domain-specific enhancement
 python scripts/enhanced_training.py \
@@ -261,7 +261,7 @@ python scripts/enhanced_training.py \
 python scripts/api_server.py --config configs/production-config.yaml
 
 # Launch web interface
-python web_demo.py --model models/production-model
+python scripts/web_demo.py --model models/production-model
 
 # Run batch evaluation
 python scripts/enhanced_benchmark.py \

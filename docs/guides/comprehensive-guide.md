@@ -22,7 +22,7 @@ This guide walks you through each stage of the QLORAX enhanced application with 
 
 **Command:**
 ```powershell
-python validate_system.py
+python scripts/validate_system.py
 ```
 
 **Expected Output:**

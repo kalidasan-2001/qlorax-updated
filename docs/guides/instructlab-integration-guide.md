@@ -28,13 +28,13 @@ python scripts/instructlab_integration.py
 
 ```bash
 # Run enhanced training with InstructLab
-python quick_start.py --mode enhanced --synthetic-samples 100
+python scripts/quick_start.py --mode enhanced --synthetic-samples 100
 
 # Run with custom domain
-python quick_start.py --mode enhanced --domain machine_learning --synthetic-samples 200
+python scripts/quick_start.py --mode enhanced --domain machine_learning --synthetic-samples 200
 
 # Demo mode (no actual training)
-python quick_start.py --demo
+python scripts/quick_start.py --demo
 ```
 
 ## 📋 Core Components
