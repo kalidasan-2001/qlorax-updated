@@ -1,335 +1,186 @@
-# 🚀 QLORAX Enhanced: Production QLoRA Fine-Tuning Suite
+# QLORAX Enhanced
 
-[![CI/CD Pipeline](https://github.com/xorjun/qlorax-enhanced/workflows/🚀%20QLORAX%20CI/CD%20Pipeline/badge.svg)](https://github.com/xorjun/qlorax-enhanced/actions)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![HuggingFace](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-yellow)](https://huggingface.co/)
-[![Docker](https://img.shields.io/badge/Docker-Containerized-blue.svg)](https://www.docker.com/)
+A thesis-backed **QLoRA fine-tuning suite** for dataset preparation, reproducible training, evaluation gating, and Docker-based deployment.
 
-> **Production-ready QLoRA fine-tuning suite with InstructLab integration, automated CI/CD pipeline, and outstanding performance (98.20% BERT F1)**
+## Highlights
 
-## 🌟 **Key Features**
+- **Hybrid dataset pipeline** with curated and synthetic samples
+- **Reproducibility artifacts** for fixed-prompt, repeatable training runs
+- **Evaluation gate** outputs for quality and regression checks
+- **Docker support** for training and serving
+- **CI/CD workflows** for automation and verification
+- **Documentation** for setup, training, evaluation, and troubleshooting
 
-✅ **Outstanding Performance**: 98.20% BERT F1, 91.80% ROUGE-L scores  
-✅ **InstructLab Integration**: Synthetic data generation and knowledge injection  
-✅ **Complete CI/CD Pipeline**: Automated training, testing, deployment  
-✅ **Production Ready**: Docker containers, quality gates, monitoring  
-✅ **Multiple Interfaces**: Web UI, REST API, CLI tools  
-✅ **Advanced Evaluation**: BERT-Score, ROUGE, BLEU metrics  
+## Repository layout
 
-## 🚀 **Quick Start**
+| Path | Purpose |
+| --- | --- |
+| `scripts/` | Training, evaluation, validation, API, and utility scripts |
+| `configs/` | Training and runtime configuration files |
+| `data/variants/hybrid_70_30.jsonl` | Final hybrid dataset used for thesis experiments |
+| `reproducibility/manifests/` | Reproducibility evidence and comparison outputs |
+| `reproducibility/configs/` | Reproducibility configuration files |
+| `rq4_evaluation/manifests/` | Evaluation-gate results and comparisons |
+| `docs/` | Guides, setup notes, references, and troubleshooting |
+| `.github/workflows/` | GitHub Actions workflows |
+| `figures/summary_metrics.csv` | Latest summary metrics snapshot |
+| `Dockerfile.training`, `Dockerfile.serve`, `docker-compose.yml` | Container setup |
 
-### **1. Setup**
+## Quick start
+
+### 1) Clone the repository
+
 ```bash
-git clone https://github.com/xorjun/qlorax-enhanced.git
+git clone https://github.com/kalidasan-2001/qlorax-updated.git
 cd qlorax-enhanced
-
-# Create environment
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# venv\Scripts\activate    # Windows
-
-# Install dependencies
-pip install -r requirements.txt
-pip install -r requirements-instructlab.txt  # Optional InstructLab features
 ```
 
-### **2. Validate System**
+### 2) Create and activate a virtual environment
+
+**Windows**
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
+
+**Linux / macOS**
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+### 3) Install dependencies
+
+Core environment:
+
+```bash
+pip install -r requirements.txt
+```
+
+Optional extras:
+
+```bash
+pip install -r requirements-train.txt
+pip install -r requirements-serve.txt
+pip install -r requirements-instructlab.txt
+pip install -r requirements-dev.txt
+```
+
+### 4) Validate the environment
+
 ```bash
 python scripts/validate_system.py
 ```
 
-### **3. Run Training**
+### 5) Run a quick training flow
+
 ```bash
-# Quick training
 python scripts/quick_start.py
-
-# Enhanced with InstructLab
-python scripts/quick_start.py --mode enhanced --synthetic-samples 100
-
-# Production training
-python scripts/enhanced_training.py --config configs/production-config.yaml
 ```
 
-### **4. Launch Interfaces**
+Enhanced training:
+
 ```bash
-# Web interface
-python scripts/web_demo.py
-# Access: http://localhost:7860
-
-# API server
-python scripts/api_server.py
-# Docs: http://localhost:8000/docs
+python scripts/run_enhanced_training.py --config configs/production-config.yaml
 ```
 
-## 📊 **Performance Benchmarks**
+## Common tasks
 
-| Configuration | BERT F1 | ROUGE-L | BLEU | Training Time |
-|---------------|---------|---------|------|---------------|
-| **Standard QLoRA** | 95.40% | 88.20% | 84.10% | 1.8 hours |
-| **Enhanced + InstructLab** | **98.20%** | **91.80%** | **87.45%** | 2.5 hours |
-| **Production Config** | 97.85% | 90.95% | 86.80% | 2.2 hours |
+### Training
 
-*Tested on TinyLlama-1.1B with machine learning domain fine-tuning*
+- `scripts/quick_start.py` — simple entry point
+- `scripts/run_enhanced_training.py` — enhanced training workflow
+- `scripts/enhanced_training.py` — training orchestrator
+- `scripts/train_production.py` — production-oriented training
+- `scripts/instructlab_integration.py` — synthetic data and InstructLab integration
 
-## 🏗️ **Architecture Overview**
+### Evaluation
 
-```mermaid
-graph LR
-    A[📁 Raw Data] --> B[🧪 InstructLab Synthesis]
-    B --> C[🔗 Data Integration]
-    C --> D[🎯 QLoRA Training]
-    D --> E[📊 Evaluation]
-    E --> F[🚀 Deployment]
-    
-    F --> G[🌐 Web Interface]
-    F --> H[🔌 API Server]
-    F --> I[📊 Monitoring]
-```
+- `scripts/enhanced_benchmark.py` — benchmark and evaluation flow
+- `scripts/quality_gates.py` — gate checks and threshold logic
+- `scripts/validate_system.py` — environment and dependency validation
+- `rq4_evaluation/manifests/` — evaluation evidence
 
-## 🔧 **Core Components**
+### Serving
 
-### **Training Pipeline**
-- **`scripts/enhanced_training.py`** - Main training orchestrator
-- **`scripts/instructlab_integration.py`** - Synthetic data generation
-- **`robust_train.py`** - Fault-tolerant training
-- **`configs/production-config.yaml`** - Production configuration
+- `scripts/api_server.py` — API server
+- `scripts/web_demo.py` — web UI demo
+- `docker-compose.yml` — container orchestration
 
-### **Deployment Options**
-- **`web_demo.py`** - Interactive Gradio interface
-- **`scripts/api_server.py`** - FastAPI production server
-- **`complete_demo.py`** - Full capability demonstration
-- **`simple_demo.py`** - Basic model interaction
+## Reproducibility and evidence
 
-### **Evaluation & Monitoring**
-- **`scripts/enhanced_benchmark.py`** - Comprehensive evaluation
-- **`scripts/quality_gates.py`** - Automated quality checks
-- **`validate_system.py`** - System health validation
+This repository includes thesis-critical evidence for:
 
-## 🧪 **InstructLab Integration**
+- dataset construction
+- reproducible training execution
+- evaluation-gate checks
+- CI/CD validation
 
-### **Features**
-- **📚 Taxonomy Creation** - Domain-specific knowledge structures
-- **🔬 Synthetic Data Generation** - High-quality training augmentation  
-- **📊 Quality Validation** - Automated data quality checks
-- **🔗 Seamless Integration** - Works with existing QLORAX pipeline
+Key evidence locations:
 
-### **Usage**
-```python
-from scripts.instructlab_integration import QLORAXInstructLab
+- `data/variants/hybrid_70_30.jsonl`
+- `reproducibility/manifests/`
+- `reproducibility/configs/`
+- `rq4_evaluation/manifests/`
 
-# Initialize InstructLab
-instructlab = QLORAXInstructLab()
+## Latest summary metrics
 
-# Generate synthetic data
-synthetic_data = instructlab.generate_synthetic_data(
-    domain="machine_learning",
-    num_samples=100
-)
+See `figures/summary_metrics.csv` for the latest snapshot. Selected values:
 
-# Enhanced training
-python scripts/enhanced_training.py \
-    --config configs/production-config.yaml \
-    --synthetic-samples 150
-```
+- Semantic similarity: `0.7697`
+- BLEU-1: `28.5416`
+- BLEU-2: `21.6344`
+- BLEU-4: `18.7194`
+- ROUGE-1: `0.4019`
+- ROUGE-2: `0.2893`
+- ROUGE-L: `0.3531`
+- Exact match: `0.0`
+- Eval loss: `1.6927`
+- Perplexity: `5.4343`
 
-## 🐳 **Docker Deployment**
+## Docker
 
-### **Quick Deploy**
+Build the training image:
+
 ```bash
-# Full stack deployment
-docker-compose up -d
-
-# Access services:
-# - Web UI: http://localhost:7860
-# - API: http://localhost:8000
-# - Docs: http://localhost:8000/docs
-```
-
-### **Individual Services**
-```bash
-# Training container
 docker build -f Dockerfile.training -t qlorax-train .
-docker run --gpus all -v $(pwd):/workspace qlorax-train
-
-# Serving container  
-docker build -f Dockerfile.serve -t qlorax-serve .
-docker run -p 8000:8000 qlorax-serve
 ```
 
-## 🔄 **CI/CD Pipeline**
+Build the serving image:
 
-Our GitHub Actions workflow provides:
-
-### **Automated Testing**
-- ✅ Unit tests and integration tests
-- ✅ Code quality checks (black, isort, mypy)
-- ✅ Security scanning
-- ✅ Multi-environment testing
-
-### **Quality Gates**
-- 📊 Performance benchmarks
-- 🎯 Model accuracy thresholds
-- 📈 Regression detection
-- 🔍 Code coverage reports
-
-### **Deployment Automation**
-- 🐳 Docker image builds
-- 🚀 Multi-environment deployment
-- 📦 Release management
-- 📊 Performance monitoring
-
-## 📚 **Documentation**
-
-### **📖 User Guides**
-- [🔬 InstructLab Integration Guide](docs/guides/instructlab-integration-guide.md)
-- [🎯 Fine-tuning Guide](docs/guides/fine-tuning-guide.md)
-- [🚀 Comprehensive Guide](docs/guides/comprehensive-guide.md)
-- [👥 Walkthrough Stages](docs/guides/walkthrough-stages.md)
-
-### **🛠️ Setup & Configuration**
-- [💿 Complete Installation](docs/setup/installation-complete.md)
-- [🔄 CI/CD Setup Guide](docs/setup/ci-cd-setup.md)
-
-### **📋 Reference Documentation**
-- [⚙️ Essential Commands](docs/reference/essential-commands.md)
-- [📊 InstructLab Summary](docs/reference/instructlab-integration-summary.md)
-- [🏃‍♂️ Complete Run Guide](docs/reference/run-complete.md)
-
-### **🔍 Troubleshooting**
-- [❌ Error Resolution](docs/troubleshooting/error-resolution.md)
-- [🧪 Training Fixes](docs/troubleshooting/training-fix.md)
-
-## ⚙️ **Configuration**
-
-### **Production Config Example**
-```yaml
-# configs/production-config.yaml
-model:
-  base_model: "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
-  
-lora:
-  r: 32
-  alpha: 64
-  dropout: 0.05
-  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
-  
-training:
-  batch_size: 4
-  learning_rate: 2e-4
-  epochs: 3
-  max_length: 512
-  
-instructlab:
-  enabled: true
-  synthetic_samples: 150
-  domain: "machine_learning"
-  
-evaluation:
-  metrics: ["bert_score", "rouge", "bleu"]
-  thresholds:
-    bert_f1: 0.90
-    rouge_l: 0.85
-```
-
-## 🎯 **Usage Examples**
-
-### **Basic Training**
-```python
-# Simple training run
-python scripts/quick_start.py
-
-# With custom configuration
-python scripts/quick_start.py --config configs/my-config.yaml
-```
-
-### **Enhanced Training with InstructLab**
-```python
-# Enhanced mode with synthetic data
-python scripts/quick_start.py --mode enhanced --synthetic-samples 200
-
-# Domain-specific enhancement
-python scripts/enhanced_training.py \
-    --config configs/production-config.yaml \
-    --domain "customer_support" \
-    --knowledge-sources docs/support-guide.md
-```
-
-### **Production Deployment**
-```python
-# Start production API server
-python scripts/api_server.py --config configs/production-config.yaml
-
-# Launch web interface
-python scripts/web_demo.py --model models/production-model
-
-# Run batch evaluation
-python scripts/enhanced_benchmark.py \
-    --model models/production-model \
-    --test-data data/test_data.jsonl
-```
-
-## 🤝 **Contributing**
-
-We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md).
-
-### **Development Setup**
 ```bash
-# Install development dependencies
-pip install -r requirements-dev.txt
+docker build -f Dockerfile.serve -t qlorax-serve .
+```
 
-# Run tests
+Start the stack:
+
+```bash
+docker-compose up -d
+```
+
+## Documentation
+
+- `docs/guides/comprehensive-guide.md`
+- `docs/guides/fine-tuning-guide.md`
+- `docs/guides/instructlab-integration-guide.md`
+- `docs/guides/walkthrough-stages.md`
+- `docs/setup/installation-complete.md`
+- `docs/setup/ci-cd-setup.md`
+- `docs/reference/essential-commands.md`
+- `docs/reference/instructlab-integration-summary.md`
+- `docs/reference/run-complete.md`
+- `docs/troubleshooting/error-resolution.md`
+- `docs/troubleshooting/training-fix.md`
+
+## Development
+
+```bash
 pytest tests/ -v
-
-# Code quality
 black .
 isort .
 mypy scripts/
 ```
 
-### **Contribution Areas**
-- 🧪 Model support expansion
-- 🔬 InstructLab enhancements  
-- 📊 New evaluation metrics
-- 🌐 UI/UX improvements
-- 📚 Documentation updates
+## License
 
-## 📄 **License**
-
-MIT License - see [LICENSE](LICENSE) for details.
-
-## 🙏 **Acknowledgments**
-
-- **🤗 Hugging Face** - Transformers, PEFT, Datasets
-- **📊 InstructLab** - Synthetic data generation framework  
-- **⚡ QLoRA** - Efficient fine-tuning methodology
-- **🌐 Gradio** - Interactive web interfaces
-- **🔌 FastAPI** - Production API framework
-
-## 📊 **Project Statistics**
-
-![GitHub stars](https://img.shields.io/github/stars/xorjun/qlorax-enhanced?style=social)
-![GitHub forks](https://img.shields.io/github/forks/xorjun/qlorax-enhanced?style=social)
-![GitHub issues](https://img.shields.io/github/issues/xorjun/qlorax-enhanced)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/xorjun/qlorax-enhanced)
-![Lines of code](https://img.shields.io/tokei/lines/github/xorjun/qlorax-enhanced)
-
-## 🔗 **Resources**
-
-- 📚 **Documentation**: [Complete Docs](docs/)
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/xorjun/qlorax-enhanced/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/xorjun/qlorax-enhanced/discussions)  
-- 🚀 **Releases**: [Latest Releases](https://github.com/xorjun/qlorax-enhanced/releases)
-- 📊 **Performance**: [Benchmark Results](results/)
-
----
-
-<div align="center">
-
-**⭐ Star this repo if it helps you! ⭐**
-
-*Empowering efficient AI fine-tuning for everyone*
-
-</div>#   G i t H u b   A c t i o n s   W o r k i n g ! 
- 
- 
+MIT License. See `LICENSE`.
